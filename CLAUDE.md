@@ -100,6 +100,18 @@ Configuração de desenvolvimento (ver `README.md` para detalhes):
 
 Testes: projeto `Syslaps.Pdv.Test` (MSTest) — rodar pelo Test Explorer do Visual Studio.
 
+## Modelo de branches (Git Flow)
+
+O projeto usa **Git Flow**. Resumo (detalhes em `CONTRIBUTING.md`):
+
+- `master` — código em produção; recebe _tags_ de versão. Só vem de `release/*` e `hotfix/*`.
+- `develop` — integração do próximo lançamento; base das features.
+- `feature/<descricao>` sai e volta para `develop`.
+- `release/<versao>` sai de `develop`, vai para `master` (com _tag_) e volta para `develop`.
+- `hotfix/<versao>` sai de `master`, vai para `master` (com _tag_) e volta para `develop`.
+
+Nomes em português, minúsculos, com hífen (ex.: `feature/desconto-por-cliente`).
+
 ## Ao alterar código, lembre-se
 
 - Mantenha **português** em nomes e comentários.
