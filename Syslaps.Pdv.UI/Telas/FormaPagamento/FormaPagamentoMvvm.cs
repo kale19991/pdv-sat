@@ -55,10 +55,10 @@ namespace Syslaps.Pdv.UI.Telas.FormaPagamento
             {
                 return _salvarFormasDePagamentoCommand ?? (_salvarFormasDePagamentoCommand = new RelayCommandMvvm(param =>
                 {
-                    GruposDeFormasDePagamento
-                        .SelectMany(grupo => grupo.Itens)
-                        .ToList()
-                        .ForEach(tipoPagamento => _tipoPagamentoDominio.AtualizarHabilitacao(tipoPagamento, tipoPagamento.Habilitada));
+                    var todosOsItens = GruposDeFormasDePagamento.SelectMany(grupo => grupo.Itens).ToList();
+                    todosOsItens.ForEach(tipoPagamento => _tipoPagamentoDominio.AtualizarHabilitacao(tipoPagamento, tipoPagamento.Habilitada));
+
+                    InstanceManager.ListaDeTipoPagamentos = todosOsItens.Where(x => x.Habilitada).ToList();
 
                     FormasDePagamentoSalvasHandler?.Invoke();
                 }, null));

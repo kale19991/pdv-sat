@@ -4,18 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Configurações" Height="340" Width="420" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Configurações" Width="420" SizeToContent="Height" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <DockPanel>
-        <Border DockPanel.Dock="Bottom" Height="48" Margin="0,5,10,5">
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+        <Border DockPanel.Dock="Bottom" Height="58" Margin="0,5,10,5">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
                 <Button IsCancel="True" Content="_Fechar" Width="76" Height="35"/>
             </StackPanel>
         </Border>
         <GroupBox Header="  Configurações  " Margin="10">
-            <UniformGrid Rows="2" Columns="1" Margin="10">
-                <Button x:Name="BtnEditarEmpresa" Content="_Editar Empresa" Height="90" Margin="10" Click="BtnEditarEmpresa_OnClick" Cursor="Hand" ForceCursor="True" FontSize="18" />
-                <Button x:Name="BtnFormasDePagamento" Content="_Formas de Pagamento" Height="90" Margin="10" Click="BtnFormasDePagamento_OnClick" Cursor="Hand" ForceCursor="True" FontSize="18" />
-            </UniformGrid>
+            <StackPanel Margin="10">
+                <Button x:Name="BtnEditarEmpresa" Content="_Editar Empresa" Height="70" Margin="10" Click="BtnEditarEmpresa_OnClick" Cursor="Hand" ForceCursor="True" FontSize="18" />
+                <Button x:Name="BtnFormasDePagamento" Content="_Formas de Pagamento" Height="70" Margin="10" Click="BtnFormasDePagamento_OnClick" Cursor="Hand" ForceCursor="True" FontSize="18" />
+            </StackPanel>
         </GroupBox>
     </DockPanel>
 </Window>
