@@ -1,9 +1,5 @@
 ﻿using Syslaps.Pdv.Cross;
-using System;
-using System.Configuration;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Syslaps.Pdv.UI.Telas.Alertas
 {
@@ -16,19 +12,9 @@ namespace Syslaps.Pdv.UI.Telas.Alertas
             _mvvm = mvvm;
             InitializeComponent();
             this.Title = InstanceManager.Parametros.TituloNoConfig;
-            TxtCpf.Mask = ConfigurationManager.AppSettings["MascaraCPF"];
 
             if (!_mvvm.VendaCorrente.VendaCorrente.CpfCnpjCliente.IsNullOrEmpty())
-            {
-                if( _mvvm.VendaCorrente.VendaCorrente.TipoDocumento == "CNPJ")
-                {
-                    TxtCpf.Mask = ConfigurationManager.AppSettings["MascaraCNPJ"];
-                    tpCnpj.IsChecked = true;
-
-                }
-                TxtCpf.Text = _mvvm.VendaCorrente.VendaCorrente.CpfCnpjCliente;
-            }
-                
+                TxtCpf.Documento = _mvvm.VendaCorrente.VendaCorrente.CpfCnpjCliente;
 
             if (!_mvvm.VendaCorrente.VendaCorrente.NomeCliente.IsNullOrEmpty())
                 TxtNome.Text = _mvvm.VendaCorrente.VendaCorrente.NomeCliente;
@@ -36,7 +22,7 @@ namespace Syslaps.Pdv.UI.Telas.Alertas
 
         private void BtnOk_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!TxtCpf.Text.IsCpfOrCnpj())
+            if (!TxtCpf.Documento.IsCpfOrCnpj())
             {
                 MessageBox.Show("CPF ou CNPJ inválido.", InstanceManager.Parametros.TituloDasMensagens, MessageBoxButton.OK, MessageBoxImage.Error);
                 TxtCpf.Focus();
@@ -47,7 +33,7 @@ namespace Syslaps.Pdv.UI.Telas.Alertas
             {
                 _mvvm.VendaCorrente.VendaCorrente.CpfCnpjCliente = !TxtCpf.Text.IsNullOrEmpty() ? TxtCpf.Text : "";
                 _mvvm.VendaCorrente.VendaCorrente.NomeCliente = !TxtNome.Text.IsNullOrEmpty() ? TxtNome.Text : "";
-                _mvvm.VendaCorrente.VendaCorrente.TipoDocumento = tpCnpj.IsChecked.Value ? "CNPJ" : "CPF";
+                _mvvm.VendaCorrente.VendaCorrente.TipoDocumento = TxtCpf.Documento.Length > 11 ? "CNPJ" : "CPF";
             }
 
             this.DialogResult = true;
@@ -56,21 +42,6 @@ namespace Syslaps.Pdv.UI.Telas.Alertas
         private void IniciarNovaVenda_OnLoaded(object sender, RoutedEventArgs e)
         {
             TxtCpf.Focus();
-        }
-
-        private void TxtCpf_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TpDocumentChecked(object sender, RoutedEventArgs e)
-        {
-            if (TxtCpf != null)
-            {
-                TxtCpf.Mask = (sender as Control).Name == "tpCnpj" ? ConfigurationManager.AppSettings["MascaraCNPJ"] : ConfigurationManager.AppSettings["MascaraCPF"];
-                TxtCpf.Focus();
-                TxtCpf.SelectAll();
-            }
         }
     }
 }

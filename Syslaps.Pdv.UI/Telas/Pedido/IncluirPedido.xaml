@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Syslaps.Pdv.UI.Telas.Pedido"
         xmlns:s="clr-namespace:System;assembly=mscorlib"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:ui="clr-namespace:Syslaps.Pdv.UI"
+        xmlns:controles="clr-namespace:Syslaps.Pdv.UI.Controles"
         mc:Ignorable="d"
         Title="Incluir Pedido" Height="300" Width="300" WindowState="Maximized" Closing="IncluirPedido_OnClosing" Loaded="IncluirPedido_OnLoaded" >
     <DockPanel>
@@ -39,13 +40,13 @@
                 <xctk:MaskedTextBox x:Name="TxtHoraEntrega" Mask="00:00" ValueDataType="{x:Type s:String}"  Grid.Column="3" Margin="3" Grid.Row="0"   Text="{Binding HoraEntrega, StringFormat='{}{0:HH:mm}'}" Foreground="DarkRed"  FontSize="28" FontWeight="Bold" Width="100" HorizontalAlignment="Left" HorizontalContentAlignment="Center" />
                 
                 <TextBlock Grid.Column="0" Margin="5,0,0,0" Grid.Row="1" Text="Cliente:"  />
-                <TextBox Name="TxtNome" Margin="3" Grid.Column="1" Grid.Row="1" Text="{Binding PedidoCorrente.NomeCliente}" Foreground="DarkRed"  FontSize="22" FontWeight="Bold"  />
+                <controles:TextBoxPadrao x:Name="TxtNome" Obrigatorio="True" Margin="3" Grid.Column="1" Grid.Row="1" Text="{Binding PedidoCorrente.NomeCliente}" Foreground="DarkRed"  FontSize="22" FontWeight="Bold"  />
 
                 <TextBlock Grid.Column="2" Margin="5,0,0,0" Grid.Row="1" Text="Telefone:" />
                 <xctk:MaskedTextBox x:Name="TxtTelefone" Mask="(00)90000-0000" ValueDataType="{x:Type s:String}"  Margin="3" Grid.Column="3" Grid.Row="1" Value="{Binding PedidoCorrente.Telefone}" Foreground="DarkRed"  FontSize="22" FontWeight="Bold"  />
 
                 <TextBlock Grid.Column="0" Margin="5,0,0,0" Grid.Row="2" Text="Observações:" />
-                <TextBox Grid.Column="1" Margin="3" Grid.Row="2" Grid.ColumnSpan="3" VerticalContentAlignment="Top" Text="{Binding PedidoCorrente.Observacao}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Foreground="DarkRed"  FontSize="22" FontWeight="Bold" />
+                <controles:TextBoxPadrao Grid.Column="1" Margin="3" Grid.Row="2" Grid.ColumnSpan="3" VerticalContentAlignment="Top" Text="{Binding PedidoCorrente.Observacao}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Foreground="DarkRed"  FontSize="22" FontWeight="Bold" />
             </Grid>
         </Border>
 
@@ -66,7 +67,7 @@
                                         <RowDefinition Height="45"/>
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBox x:Name="TxtProduto" Grid.Row="0" Text="{Binding FiltrarComEsteTexto, UpdateSourceTrigger=PropertyChanged}" FontSize="22" Margin="0,0,0,2" />
+                                    <controles:TextBoxPadrao x:Name="TxtProduto" Grid.Row="0" Text="{Binding FiltrarComEsteTexto, UpdateSourceTrigger=PropertyChanged}" FontSize="22" Margin="0,0,0,2" />
                                     <ListBox  Grid.Row="1" ItemsSource="{Binding ListaDeProdutosFiltrada}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate >
                                             <DataTemplate   >

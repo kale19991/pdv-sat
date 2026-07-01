@@ -1,8 +1,9 @@
-﻿<Window xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  x:Class="Syslaps.Pdv.UI.Telas.Alertas.DadosConsumidor"
+﻿<Window x:Class="Syslaps.Pdv.UI.Telas.Alertas.DadosConsumidor"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controles="clr-namespace:Syslaps.Pdv.UI.Controles"
         mc:Ignorable="d"
         Title="Dados do Consulmidor" Height="200" Width="435" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="IniciarNovaVenda_OnLoaded" >
     <Border Margin="5" BorderBrush="CadetBlue" BorderThickness="1,1,2,2" CornerRadius="2">
@@ -14,14 +15,12 @@
             <Border>
                 <StackPanel Orientation="Vertical">
                     <DockPanel Margin="5" Height="40">
-                        <RadioButton Name="tpCpf" IsChecked="True" Width="50" VerticalContentAlignment="Center" Checked="TpDocumentChecked">CPF</RadioButton>
-                        <RadioButton Name="tpCnpj" Width="50" VerticalContentAlignment="Center" Checked="TpDocumentChecked">CNPJ</RadioButton>
-                        <xctk:MaskedTextBox Name="TxtCpf" Text="" VerticalAlignment="Center" FontSize="22"/>
-                        
+                        <TextBlock Text="CPF/CNPJ:" Width="100" VerticalAlignment="Center"/>
+                        <controles:TextBoxCpfCnpj x:Name="TxtCpf" VerticalAlignment="Center" FontSize="22"/>
                     </DockPanel>
                     <DockPanel Margin="5" Height="40">
                         <TextBlock Text="Nome:" Width="100" VerticalAlignment="Center"/>
-                        <TextBox Name="TxtNome" Text=""  VerticalAlignment="Center" FontSize="22"/>
+                        <controles:TextBoxPadrao x:Name="TxtNome" Text=""  VerticalAlignment="Center" FontSize="22"/>
                     </DockPanel>
                 </StackPanel>
             </Border>

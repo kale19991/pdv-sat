@@ -128,12 +128,21 @@ namespace Syslaps.Pdv.Core
 
         public void SemearDadosDaEmpresa(string codigoEmpresa)
         {
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Dinheiro", DiasParaPagamento = 0, PercentualDesconto = 0 });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Débito Rede", DiasParaPagamento = 1, PercentualDesconto = 2.48m });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Débito Moderninha", DiasParaPagamento = 1, PercentualDesconto = 2.39m });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Crédito Rede", DiasParaPagamento = 30, PercentualDesconto = 3.78m });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Crédito Moderninha", DiasParaPagamento = 30, PercentualDesconto = 3.20m });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Tiket", DiasParaPagamento = 30, PercentualDesconto = 30m });
+            Dominio.Venda.CatalogoDeFormasDePagamento.Todas.ToList().ForEach(formaDePagamento =>
+            {
+                var habilitadaPorPadrao = formaDePagamento.Categoria == Dominio.Venda.CategoriaFormaPagamento.PagamentoNaEntrega;
+
+                _repositorio.Inserir<TipoPagamento>(new TipoPagamento
+                {
+                    CodigoTipoPagamento = GerarCodigoUnico(),
+                    Empresa_CodigoEmpresa = codigoEmpresa,
+                    Nome = formaDePagamento.Nome,
+                    Categoria = formaDePagamento.Categoria,
+                    DiasParaPagamento = 0,
+                    PercentualDesconto = 0,
+                    Habilitada = habilitadaPorPadrao
+                });
+            });
 
             EtapaHandler?.Invoke("Tipo de pagamentos criados...");
             _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });

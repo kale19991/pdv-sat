@@ -97,6 +97,7 @@
     <Compile Include="Dominio\Usuario\Usuario.cs" />
     <Compile Include="Dominio\Venda\IVendaRepositorio.cs" />
     <Compile Include="Dominio\Venda\EnumTipoDocumento.cs" />
+    <Compile Include="Dominio\Venda\CatalogoDeFormasDePagamento.cs" />
     <Compile Include="Dominio\Venda\TipoPagamento.cs" />
     <Compile Include="Dominio\Venda\Venda.cs" />
     <Compile Include="Parametros.cs" />

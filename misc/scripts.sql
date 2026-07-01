@@ -369,14 +369,13 @@ CREATE TABLE ResultadoOperacaoFechamento (
     ValorTotalPagamentoDinheiro       DECIMAL      NOT NULL,
     ValorTotalPagamentoDebito         DECIMAL      NOT NULL,
     ValorTotalPagamentoCredito        DECIMAL      NOT NULL,
-    ValorTotalPagamentoTicket         DECIMAL      NOT NULL,
+    ValorTotalPagamentoOutros         DECIMAL      NOT NULL,
     ValorTotalPagamento               DECIMAL      NOT NULL,
     ValorTotalEstimadoEmEspecie       DECIMAL      NOT NULL,
     DiferencaNoCaixa                  DECIMAL      NOT NULL,
     ValorTotalDescontoVenda           DECIMAL      NOT NULL,
     ValorRecebimentoDebito            DECIMAL      NOT NULL,
     ValorRecebimentoCretito           DECIMAL      NOT NULL,
-    ValorRecebimentoTicket            DECIMAL      NOT NULL,
     Sincronizado                      BIT          NOT NULL
                                                    DEFAULT (0),
     PRIMARY KEY (
@@ -398,8 +397,11 @@ CREATE TABLE TipoPagamento (
     CodigoTipoPagamento   VARCHAR (32) NOT NULL,
     Empresa_CodigoEmpresa VARCHAR (32) NOT NULL,
     Nome                  VARCHAR (30) NOT NULL,
+    Categoria             VARCHAR (40) NOT NULL,
     PercentualDesconto    DECIMAL      NOT NULL,
     DiasParaPagamento     INTEGER      NOT NULL,
+    Habilitada            BIT          NOT NULL
+                                     DEFAULT (1),
     Sincronizado          BIT          NOT NULL
                                      DEFAULT (0),
     PRIMARY KEY (

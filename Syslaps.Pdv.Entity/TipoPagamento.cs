@@ -25,9 +25,16 @@ namespace Syslaps.Pdv.Entity
         [StringLength(30)]
         public string Nome { get; set; }
 
+        [Required]
+        [StringLength(40)]
+        public string Categoria { get; set; }
+
         public decimal PercentualDesconto { get; set; }
 
         public long DiasParaPagamento { get; set; }
+
+        [Required]
+        public virtual bool Habilitada { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VendaPagamento> VendaPagamentoes { get; set; }

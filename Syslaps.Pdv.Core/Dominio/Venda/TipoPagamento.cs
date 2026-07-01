@@ -26,34 +26,20 @@ namespace Syslaps.Pdv.Core.Dominio.Venda
             get { return ListaDeTiposDePagamento.SingleOrDefault(x => x.Nome == "Dinheiro"); }
         }
 
-        public Entity.TipoPagamento DebitoRede
+        public Entity.TipoPagamento Pix
         {
-            get { return ListaDeTiposDePagamento.SingleOrDefault(x => x.Nome == "Débito Rede"); }
-        }
-
-        public Entity.TipoPagamento DebitoModerninha
-        {
-            get { return ListaDeTiposDePagamento.SingleOrDefault(x => x.Nome == "Débito Moderninha"); }
-        }
-
-        public Entity.TipoPagamento CreditoRede
-        {
-            get { return ListaDeTiposDePagamento.SingleOrDefault(x => x.Nome == "Crédito Rede"); }
-        }
-
-        public Entity.TipoPagamento CreditoModerninha
-        {
-            get { return ListaDeTiposDePagamento.SingleOrDefault(x => x.Nome == "Crédito Moderninha"); }
-        }
-
-        public Entity.TipoPagamento Tiket
-        {
-            get { return ListaDeTiposDePagamento.SingleOrDefault(x => x.Nome == "Tiket"); }
+            get { return ListaDeTiposDePagamento.SingleOrDefault(x => x.Nome == "Pix" && x.Categoria == CategoriaFormaPagamento.PagamentoNaEntrega); }
         }
 
         public TipoPagamento(IRepositorioBase repositorio)
         {
             this.repositorio = repositorio;
+        }
+
+        public void AtualizarHabilitacao(Entity.TipoPagamento tipoPagamento, bool habilitada)
+        {
+            tipoPagamento.Habilitada = habilitada;
+            repositorio.Atualizar(tipoPagamento);
         }
     }
 }

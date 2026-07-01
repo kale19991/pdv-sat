@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:entity="clr-namespace:Syslaps.Pdv.Entity;assembly=Syslaps.Pdv.Entity"
+        xmlns:controles="clr-namespace:Syslaps.Pdv.UI.Controles"
         mc:Ignorable="d"
         Title="" Height="300" Width="300" ResizeMode="CanMinimize" WindowState="Maximized" WindowStyle="SingleBorderWindow"  Loaded="PontoDeVenda_OnLoaded" KeyDown="PontoDeVenda_OnKeyDown" Closing="PontoDeVenda_OnClosing">
     <DockPanel>
@@ -81,7 +82,7 @@
                             <ColumnDefinition  Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Localizar Produto: " FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                        <TextBox Grid.Column="1"  x:Name="TxtProduto" Text="{Binding FiltrarComEsteTexto, UpdateSourceTrigger=PropertyChanged}" Height="63" FontSize="36"  Margin="15, 0, 25, 0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" />
+                        <controles:TextBoxPadrao Grid.Column="1"  x:Name="TxtProduto" Text="{Binding FiltrarComEsteTexto, UpdateSourceTrigger=PropertyChanged}" Height="63" FontSize="36"  Margin="15, 0, 25, 0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" />
                         <TextBlock Grid.Column="2" x:Name="LblNrComanda" Text="Comanda: " Visibility="Collapsed" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="15,0,0,0"/>
                         <TextBox Grid.Column="3" x:Name="TxtNrComanda" Text="{Binding NumeroComanda}"  Visibility="Collapsed"  Height="63" FontSize="36"  Margin="15, 0, 25, 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" KeyDown="TxtNrComanda_OnKeyDown" LostFocus="TxtNrComanda_OnLostFocus" />
                     </Grid>
@@ -140,7 +141,7 @@
                                                             <TextBlock Text="Qtde:" Margin="10,0,5,0" FontSize="18" />
                                                             <TextBox Name="TxtVendaProdutoQuantidade"  Text="{Binding Quantidade, ConverterCulture='pt-BR'}"  Width="30" FontSize="18" PreviewTextInput="UIElement_OnPreviewTextInput" LostFocus="TxtVendaProdutoValor_OnLostFocus" TextAlignment="Center" KeyDown="TxtVendaProdutoQuantidade_KeyDown" />
                                                             <TextBlock Text="x R$" Margin="10,0,10,0"  FontSize="18" />
-                                                            <TextBox Name="TxtVendaProdutoValor"  Text="{Binding ValorDoProdutoComDesconto, ConverterCulture='pt-BR', StringFormat={}{0:0.00}}" Width="50" FontSize="18"  TextAlignment="Center" PreviewTextInput="UIElement_OnPreviewTextInput" LostFocus="TxtVendaProdutoValor_OnLostFocus" KeyDown="TxtVendaProdutoQuantidade_KeyDown"/>
+                                                            <controles:TextBoxDinheiro x:Name="TxtVendaProdutoValor"  Valor="{Binding ValorDoProdutoComDesconto}" Width="50" FontSize="18"  TextAlignment="Center" LostFocus="TxtVendaProdutoValor_OnLostFocus" KeyDown="TxtVendaProdutoQuantidade_KeyDown"/>
                                                             <TextBlock Text="{Binding ValorTotalVendaProduto, ConverterCulture='pt-BR', StringFormat={}{0:c}}" Margin="10,0,0,0" FontSize="22" FontWeight="Bold" Foreground="DarkRed" />
                                                         </WrapPanel>
                                                     </Grid>

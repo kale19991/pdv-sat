@@ -11,6 +11,8 @@ namespace Syslaps.Pdv.UI.Telas
 {
     public partial class TelaPrincipal : Window
     {
+        private bool _saindoParaLogin;
+
         public TelaPrincipal()
         {
             InitializeComponent();
@@ -21,7 +23,23 @@ namespace Syslaps.Pdv.UI.Telas
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            if (_saindoParaLogin) return;
             Application.Current.Shutdown();
+        }
+
+        private void MenuSair_OnClick(object sender, RoutedEventArgs e)
+        {
+            _saindoParaLogin = true;
+            InstanceManager.UsuarioCorrente = null;
+            InstanceManager.EmpresaCorrente = null;
+            InstanceManager.CaixaCorrente = null;
+            new LoginWindow().Show();
+            Close();
+        }
+
+        private void MenuConfiguracoes_OnClick(object sender, RoutedEventArgs e)
+        {
+            (new Configuracoes.ConfiguracoesWindow()).ShowDialog();
         }
 
         private void BtnCaixa_Click(object sender, RoutedEventArgs e)

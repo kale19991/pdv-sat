@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:entity="clr-namespace:Syslaps.Pdv.Entity;assembly=Syslaps.Pdv.Entity"
+        xmlns:controles="clr-namespace:Syslaps.Pdv.UI.Controles"
         mc:Ignorable="d"
         Title="Efetuar Pagamento" Height="400" Width="650" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Pagamentos_OnLoaded" KeyDown="Window_KeyDown">
     <DockPanel>
@@ -22,7 +23,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBox Name="TxtValor" Text="Digite o Valor" Width="150" FontSize="16" PreviewTextInput="UIElement_OnPreviewTextInput" Margin="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                <controles:TextBoxDinheiro x:Name="TxtValor" Width="150" FontSize="16" Margin="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
                 <Button IsDefault="True" Content="Adicionar Pagamento" Click="AdicionarPagamento_OnClick" Width="122"/>
             </StackPanel>
         </Border>

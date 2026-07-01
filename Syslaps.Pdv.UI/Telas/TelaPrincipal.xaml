@@ -7,15 +7,13 @@
         Title="" Height="300" Width="300" Closed="Window_Closed" WindowState="Maximized" WindowStartupLocation="CenterScreen" Loaded="TelaPrincipal_OnLoaded" KeyDown="Window_KeyDown" >
     
         <DockPanel>
-        <!--<Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="_New" />
-                <MenuItem Header="_Open" />
-                <MenuItem Header="_Save" />
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Menu">
+                <MenuItem Header="_Configurações" Click="MenuConfiguracoes_OnClick" />
                 <Separator />
-                <MenuItem Header="_Exit" />
+                <MenuItem Header="_Sair" Click="MenuSair_OnClick" />
             </MenuItem>
-        </Menu>-->
+        </Menu>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>

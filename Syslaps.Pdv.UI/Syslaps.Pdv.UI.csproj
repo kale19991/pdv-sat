@@ -121,6 +121,9 @@
     </ApplicationDefinition>
     <Compile Include="ContainerIoc.cs" />
     <Compile Include="InstanceManager.cs" />
+    <Compile Include="Controles\TextBoxPadrao.cs" />
+    <Compile Include="Controles\TextBoxDinheiro.cs" />
+    <Compile Include="Controles\TextBoxCpfCnpj.cs" />
     <Compile Include="Telas\Alertas\ExecutarProcessoImportarProduto.xaml.cs">
       <DependentUpon>ExecutarProcessoImportarProduto.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,17 @@
       <DependentUpon>CadastroDeEmpresaWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Telas\Empresa\CadastroDeEmpresaMvvm.cs" />
+    <Compile Include="Telas\Empresa\EditarEmpresaWindow.xaml.cs">
+      <DependentUpon>EditarEmpresaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Telas\Empresa\EditarEmpresaMvvm.cs" />
+    <Compile Include="Telas\Configuracoes\ConfiguracoesWindow.xaml.cs">
+      <DependentUpon>ConfiguracoesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Telas\FormaPagamento\FormaPagamentoWindow.xaml.cs">
+      <DependentUpon>FormaPagamentoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Telas\FormaPagamento\FormaPagamentoMvvm.cs" />
     <Compile Include="Telas\Comanda\ConsultarComanda.xaml.cs">
       <DependentUpon>ConsultarComanda.xaml</DependentUpon>
     </Compile>
@@ -233,6 +247,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Telas\Empresa\CadastroDeEmpresaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Telas\Empresa\EditarEmpresaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Telas\Configuracoes\ConfiguracoesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Telas\FormaPagamento\FormaPagamentoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

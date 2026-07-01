@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controles="clr-namespace:Syslaps.Pdv.UI.Controles"
         mc:Ignorable="d"
         Title="Configuração Inicial" Height="600" Width="650" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="ConfiguracaoInicialWindow_OnLoaded">
     <DockPanel>
@@ -31,34 +32,34 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,0,0,0" Text="Razão Social:" />
-                    <TextBox x:Name="TxtRazaoSocial" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="3" Text="{Binding Empresa.RazaoSocial}" />
+                    <controles:TextBoxPadrao x:Name="TxtRazaoSocial" Obrigatorio="True" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="3" Text="{Binding Empresa.RazaoSocial}" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5,0,0,0" Text="Nome Fantasia:" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="3" Text="{Binding Empresa.NomeFantasia}" />
+                    <controles:TextBoxPadrao Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="3" Text="{Binding Empresa.NomeFantasia}" />
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="5,0,0,0" Text="CPF/CNPJ:" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding Empresa.CpfCnpj}" />
+                    <controles:TextBoxCpfCnpj Obrigatorio="True" Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding Empresa.CpfCnpj}" />
 
                     <TextBlock Grid.Row="2" Grid.Column="2" Margin="5,0,0,0" Text="Inscr. Estadual:" />
-                    <TextBox Grid.Row="2" Grid.Column="3" Margin="3" Text="{Binding Empresa.InscricaoEstadual}" />
+                    <controles:TextBoxPadrao Grid.Row="2" Grid.Column="3" Margin="3" Text="{Binding Empresa.InscricaoEstadual}" />
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="5,0,0,0" Text="Endereço:" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding Empresa.Endereco}" />
+                    <controles:TextBoxPadrao Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding Empresa.Endereco}" />
 
                     <TextBlock Grid.Row="3" Grid.Column="2" Margin="5,0,0,0" Text="Número:" />
-                    <TextBox Grid.Row="3" Grid.Column="3" Margin="3" Text="{Binding Empresa.Numero}" />
+                    <controles:TextBoxPadrao Grid.Row="3" Grid.Column="3" Margin="3" Text="{Binding Empresa.Numero}" />
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Margin="5,0,0,0" Text="Bairro:" />
-                    <TextBox Grid.Row="4" Grid.Column="1" Margin="3" Text="{Binding Empresa.Bairro}" />
+                    <controles:TextBoxPadrao Grid.Row="4" Grid.Column="1" Margin="3" Text="{Binding Empresa.Bairro}" />
 
                     <TextBlock Grid.Row="4" Grid.Column="2" Margin="5,0,0,0" Text="Cidade:" />
-                    <TextBox Grid.Row="4" Grid.Column="3" Margin="3" Text="{Binding Empresa.Cidade}" />
+                    <controles:TextBoxPadrao Grid.Row="4" Grid.Column="3" Margin="3" Text="{Binding Empresa.Cidade}" />
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Margin="5,0,0,0" Text="UF:" />
-                    <TextBox Grid.Row="5" Grid.Column="1" Margin="3" MaxLength="2" Text="{Binding Empresa.Uf}" />
+                    <controles:TextBoxPadrao Grid.Row="5" Grid.Column="1" Margin="3" MaxLength="2" Text="{Binding Empresa.Uf}" />
 
                     <TextBlock Grid.Row="5" Grid.Column="2" Margin="5,0,0,0" Text="CEP:" />
-                    <TextBox Grid.Row="5" Grid.Column="3" Margin="3" Text="{Binding Empresa.Cep}" />
+                    <controles:TextBoxPadrao Grid.Row="5" Grid.Column="3" Margin="3" Text="{Binding Empresa.Cep}" />
                 </Grid>
             </GroupBox>
 
@@ -75,10 +76,10 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,0,0,0" Text="Telefone:" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Margin="3" Text="{Binding Empresa.Telefone}" />
+                    <controles:TextBoxPadrao Grid.Row="0" Grid.Column="1" Margin="3" Text="{Binding Empresa.Telefone}" />
 
                     <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Text="Email:" />
-                    <TextBox Grid.Row="0" Grid.Column="3" Margin="3" Text="{Binding Empresa.Email}" />
+                    <controles:TextBoxPadrao Grid.Row="0" Grid.Column="3" Margin="3" Text="{Binding Empresa.Email}" />
                 </Grid>
             </GroupBox>
 
@@ -95,7 +96,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,0,0,0" Text="Usuário:" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Margin="3" Text="{Binding NomeUsuario}" />
+                    <controles:TextBoxPadrao Obrigatorio="True" Grid.Row="0" Grid.Column="1" Margin="3" Text="{Binding NomeUsuario}" />
 
                     <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Text="Senha:" />
                     <PasswordBox x:Name="TxtSenha" Grid.Row="0" Grid.Column="3" Margin="3" />

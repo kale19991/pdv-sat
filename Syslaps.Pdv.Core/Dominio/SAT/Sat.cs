@@ -69,9 +69,8 @@ namespace Syslaps.Pdv.Core.Dominio.SAT
             if (!_parametros.SatHabilitado) return false;
             if (!_venda.CpfCnpjCliente.IsNullOrEmpty()) return true;
             if (_venda.CupomFiscalImpresso) return true;
-            if (_venda.VendaPagamentoes.Count(x => x.TipoPagamento.Nome.Contains("Débito") ||
-             x.TipoPagamento.Nome.Contains("Crédito") ||
-             x.TipoPagamento.Nome.Contains("Ticket")) > 0) return true;
+            if (_venda.VendaPagamentoes.Count(x => x.TipoPagamento.Categoria == CategoriaFormaPagamento.CartaoDebito ||
+             x.TipoPagamento.Categoria == CategoriaFormaPagamento.CartaoCredito) > 0) return true;
 
             return false;
         }

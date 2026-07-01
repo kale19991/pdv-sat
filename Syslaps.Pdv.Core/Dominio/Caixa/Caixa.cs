@@ -101,13 +101,13 @@ namespace Syslaps.Pdv.Core.Dominio.Caixa
                         var vendaPagamentos = _vendaRepositorio.RecuperarListaDosPagamentosDaVenda(venda.CodigoVenda);
                         resultadoFechamento.ValorTotalDescontoVenda += venda.ValorTotalDescontoVenda;
 
-                        TipoDoPagamento.ListaDeTiposDePagamento.Where(x => x.Nome.Contains("Dinheiro")).ToList().ForEach(item =>
+                        TipoDoPagamento.ListaDeTiposDePagamento.Where(x => x.Nome == "Dinheiro").ToList().ForEach(item =>
                         {
                             resultadoFechamento.ValorTotalPagamentoDinheiro += vendaPagamentos.Where(
                                     x => x.TipoPagamento_CodigoTipoPagamento == item.CodigoTipoPagamento).Sum(x => x.ValorPagamento) - venda.ValorTroco;
                         });
 
-                        TipoDoPagamento.ListaDeTiposDePagamento.Where(x => x.Nome.Contains("Crédito")).ToList().ForEach(item =>
+                        TipoDoPagamento.ListaDeTiposDePagamento.Where(x => x.Categoria == CategoriaFormaPagamento.CartaoCredito).ToList().ForEach(item =>
                         {
                             resultadoFechamento.ValorTotalPagamentoCredito +=
                             vendaPagamentos.Where(x => x.TipoPagamento_CodigoTipoPagamento == item.CodigoTipoPagamento).Sum(x => x.ValorPagamento);
@@ -115,7 +115,7 @@ namespace Syslaps.Pdv.Core.Dominio.Caixa
                             resultadoFechamento.ValorRecebimentoCretito = resultadoFechamento.ValorTotalPagamentoCredito - (item.PercentualDesconto / 100 * resultadoFechamento.ValorTotalPagamentoCredito);
                         });
 
-                        TipoDoPagamento.ListaDeTiposDePagamento.Where(x => x.Nome.Contains("Débito")).ToList().ForEach(item =>
+                        TipoDoPagamento.ListaDeTiposDePagamento.Where(x => x.Categoria == CategoriaFormaPagamento.CartaoDebito).ToList().ForEach(item =>
                         {
                             resultadoFechamento.ValorTotalPagamentoDebito +=
                             vendaPagamentos.Where(x => x.TipoPagamento_CodigoTipoPagamento == item.CodigoTipoPagamento).Sum(x => x.ValorPagamento);
@@ -123,22 +123,18 @@ namespace Syslaps.Pdv.Core.Dominio.Caixa
                             resultadoFechamento.ValorRecebimentoDebito = resultadoFechamento.ValorTotalPagamentoDebito - (item.PercentualDesconto / 100 * resultadoFechamento.ValorTotalPagamentoDebito);
                         });
 
-
-                        TipoDoPagamento.ListaDeTiposDePagamento.Where(x => x.Nome.Contains("Tiket")).ToList().ForEach(item =>
+                        TipoDoPagamento.ListaDeTiposDePagamento.Where(x => x.Nome != "Dinheiro" && x.Categoria != CategoriaFormaPagamento.CartaoCredito && x.Categoria != CategoriaFormaPagamento.CartaoDebito).ToList().ForEach(item =>
                         {
-                            resultadoFechamento.ValorTotalPagamentoTicket +=
+                            resultadoFechamento.ValorTotalPagamentoOutros +=
                             vendaPagamentos.Where(x => x.TipoPagamento_CodigoTipoPagamento == item.CodigoTipoPagamento).Sum(x => x.ValorPagamento);
-
-                            resultadoFechamento.ValorRecebimentoTicket += resultadoFechamento.ValorTotalPagamentoTicket - (item.PercentualDesconto / 100 * resultadoFechamento.ValorTotalPagamentoTicket);
                         });
-                        
 
                     });
 
                     resultadoFechamento.ValorTotalPagamento = resultadoFechamento.ValorTotalPagamentoDinheiro +
                                                               resultadoFechamento.ValorTotalPagamentoCredito +
                                                               resultadoFechamento.ValorTotalPagamentoDebito +
-                                                              resultadoFechamento.ValorTotalPagamentoTicket;
+                                                              resultadoFechamento.ValorTotalPagamentoOutros;
 
                     resultadoFechamento.ValorTotalEstimadoEmEspecie = resultadoFechamento.ValorAbertura +
                         resultadoFechamento.ValorTotalReforco + 
@@ -301,9 +297,9 @@ namespace Syslaps.Pdv.Core.Dominio.Caixa
 		                                <td align='right' style='width: 150px;  border: 1px solid black;'>{resultado
                                     .ValorTotalPagamentoCredito:c}</td></tr>
 
-                                        <tr><td style='width: 250px;  border: 1px solid black;'>Pagamentos em Ticket:</td>
+                                        <tr><td style='width: 250px;  border: 1px solid black;'>Outras Formas de Pagamento:</td>
 		                                <td align='right' style='width: 150px;  border: 1px solid black;'>{resultado
-                                        .ValorTotalPagamentoTicket:c}</td></tr>
+                                        .ValorTotalPagamentoOutros:c}</td></tr>
 
                                         <tr><td style='width: 250px;  border: 1px solid black;'>Dinheiro no Caixa p/ Sistema:</td>
 		                                <td align='right' style='width: 150px;  border: 1px solid black;'>{resultado

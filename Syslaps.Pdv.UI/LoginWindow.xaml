@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controles="clr-namespace:Syslaps.Pdv.UI.Controles"
         mc:Ignorable="d"
         Title="" Height="304.951" Width="442.195" ResizeMode="NoResize" Cursor="Hand" WindowStartupLocation="CenterScreen" Loaded="LoginWindow_OnLoaded">
     <Grid>
@@ -11,7 +12,7 @@
                 <Button x:Name="btnEntrar" Content="Entrar" Height="48" Canvas.Left="10" Canvas.Top="134" Width="246" Click="btnEntrar_Click" IsDefault="True" FontSize="16"/>
                 <Button x:Name="btnSair" Content="Sair" Height="48" Canvas.Left="272" Canvas.Top="134" Width="118" Click="btnSair_Click" FontSize="16" />
                 <Label x:Name="label1" Content="Usuário:" Canvas.Left="27" Canvas.Top="15" FontSize="16"/>
-                <TextBox x:Name="txtUsuario" Height="34" Canvas.Left="124" TextWrapping="Wrap" Canvas.Top="13" Width="266" FontSize="18" Padding="5,2" />
+                <controles:TextBoxPadrao x:Name="txtUsuario" Obrigatorio="True" Height="34" Canvas.Left="124" TextWrapping="Wrap" Canvas.Top="13" Width="266" FontSize="18" Padding="5,2" />
                 <Label x:Name="label1_Copy" Content="Senha:" Canvas.Left="27" Canvas.Top="64" FontSize="16"/>
                 <PasswordBox x:Name="txtSenha" Height="34" Canvas.Left="124" Canvas.Top="64" Width="266" FontSize="18" Padding="5,2"  />
                 <RadioButton x:Name="RdoTp1" Content="Tipo 1" Canvas.Left="126" Canvas.Top="108" FontSize="14" GroupName="tp" IsChecked="True"/>

@@ -41,16 +41,6 @@ namespace Syslaps.Pdv.UI.Telas.Alertas
         }
 
 
-        private void TxtValue_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!Char.IsDigit(e.Text[0]) && e.Text != ",")
-                e.Handled = true;
-            else
-            {
-                e.Handled = false;
-            }
-        }
-
         private void InputBox_OnLoaded(object sender, RoutedEventArgs e)
         {
             TxtValue.Focus();

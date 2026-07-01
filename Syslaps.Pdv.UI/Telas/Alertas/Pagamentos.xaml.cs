@@ -35,18 +35,8 @@ namespace Syslaps.Pdv.UI.Telas.Alertas
         {
             if (TxtValor != null)
             {
-                TxtValor.Text = _mvvm.ValorTotalDaVenda.ToString("#.00");
+                TxtValor.Valor = _mvvm.ValorTotalDaVenda;
                 TxtValor.Focus();
-            }
-        }
-
-        private void UIElement_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!Char.IsDigit(e.Text[0]) && e.Text != ",")
-                e.Handled = true;
-            else
-            {
-                e.Handled = false;
             }
         }
 
@@ -62,22 +52,14 @@ namespace Syslaps.Pdv.UI.Telas.Alertas
                     return;
                 }
 
-                if (!TxtValor.Text.IsNumeric())
-                {
-                    MessageBox.Show("Valor inválido.", InstanceManager.Parametros.TituloDasMensagens, MessageBoxButton.OK,
-                        MessageBoxImage.Exclamation);
-                    return;
-                }
-
-
-                var valor = TxtValor.Text.ToDecimal();
+                var valor = TxtValor.Valor;
                 _mvvm.AdicionarVendaPagamento(tipoDePagamento, valor);
 
                 if (_mvvm.ValorTotalDaVenda <= _mvvm.ValorTotalDePagamento)
                     BtnOk.Focus();
                 else
                 {
-                    TxtValor.Text = (_mvvm.ValorTotalDaVenda - _mvvm.ValorTotalDePagamento).ToString("#.00");
+                    TxtValor.Valor = _mvvm.ValorTotalDaVenda - _mvvm.ValorTotalDePagamento;
                     TxtValor.Focus();
                 }
             }catch(Exception ex)
@@ -90,7 +72,7 @@ namespace Syslaps.Pdv.UI.Telas.Alertas
         {
             if (TxtValor != null)
             {
-                TxtValor.Text = (_mvvm.ValorTotalDaVenda - _mvvm.ValorTotalDePagamento).ToString("0.00");
+                TxtValor.Valor = _mvvm.ValorTotalDaVenda - _mvvm.ValorTotalDePagamento;
                 TxtValor?.Focus();
             }
         }

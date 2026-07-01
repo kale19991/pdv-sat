@@ -40,6 +40,16 @@ namespace Syslaps.Pdv.Core.Dominio.Empresa
             EmpresaCorrente = empresa;
         }
 
+        public void AtualizarEmpresa(Entity.Empresa empresa)
+        {
+            empresa.TryValidateAnnotation().ToList().ForEach(item => AdicionarMensagem(item.ErrorMessage, EnumStatusDoResultado.RegraDeNegocioInvalida));
+            if (Status != EnumStatusDoResultado.MensagemDeSucesso) return;
+
+            _repositorio.Atualizar(empresa);
+            EmpresaCorrente = empresa;
+            AdicionarMensagem("Empresa atualizada com sucesso.");
+        }
+
         public void VincularUsuario(string codigoUsuario, string codigoEmpresa)
         {
             _usuarioEmpresaRepositorio.Inserir(new Entity.UsuarioEmpresa

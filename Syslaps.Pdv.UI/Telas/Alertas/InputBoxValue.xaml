@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controles="clr-namespace:Syslaps.Pdv.UI.Controles"
         mc:Ignorable="d"
         Title="InputBox" Height="200" Width="435" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="InputBox_OnLoaded">
 
@@ -18,7 +19,7 @@
                         <Image Source="../Images/sign-question-icon.png" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" />
                         <Label Name="LblDescription" HorizontalContentAlignment="Center" FontSize="16" HorizontalAlignment="Stretch" Height="37" />
                     </DockPanel>
-                    <TextBox Name="TxtValue" FontSize="32" HorizontalAlignment="Stretch" Margin="15,10,15,10" PreviewTextInput="TxtValue_PreviewTextInput" />
+                    <controles:TextBoxDinheiro x:Name="TxtValue" FontSize="32" HorizontalAlignment="Stretch" Margin="15,10,15,10" />
                 </StackPanel>
             </Border>
             <StackPanel Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,15,0" Orientation="Horizontal">

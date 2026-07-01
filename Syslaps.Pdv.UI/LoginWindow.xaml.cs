@@ -69,6 +69,9 @@ namespace Syslaps.Pdv.UI
 
                     DefinirEmpresaCorrenteDoUsuario();
 
+                    var repositorio = ContainerIoc.GetInstance<RepositorioBase>();
+                    InstanceManager.ListaDeTipoPagamentos = repositorio.RecuperarTodos<TipoPagamento>().Where(x => x.Habilitada).ToList();
+
                     UIManager<TelaPrincipal>.Show();
                     Close();
                 }
@@ -125,7 +128,6 @@ namespace Syslaps.Pdv.UI
             {
                 var repositorio = ContainerIoc.GetInstance<RepositorioBase>();
                 repositorio.LimparLogDaBase();
-                InstanceManager.ListaDeTipoPagamentos = repositorio.RecuperarTodos<TipoPagamento>();
                 InstanceManager.Logger.Info("Login Loaded.....");
             });
         }

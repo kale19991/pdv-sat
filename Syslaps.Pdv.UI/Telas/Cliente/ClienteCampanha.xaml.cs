@@ -41,16 +41,6 @@ namespace Syslaps.Pdv.UI.Telas.Cliente
             TxtCpf.Focus();
         }
 
-        private void TxtCpf_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (!Char.IsDigit(e.Text[0]) && e.Text != "." && e.Text != "-")
-                e.Handled = true;
-            else
-            {
-                e.Handled = false;
-            }
-        }
-
         private void TxtTelefone_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!Char.IsDigit(e.Text[0]) && e.Text != "(" && e.Text != ")" && e.Text != "(" && e.Text != "-")

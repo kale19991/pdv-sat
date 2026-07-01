@@ -2,6 +2,7 @@
 using Syslaps.Pdv.Core.Dominio.Impressora;
 using Syslaps.Pdv.Cross;
 using Syslaps.Pdv.Entity;
+using Syslaps.Pdv.UI.Controles;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace Syslaps.Pdv.UI.Telas.PDV
             var msgBox = new Alertas.InputBox($"{aberturaFechamento} do Caixa", $"Insira o valor de {aberturaFechamento}:");
             if (msgBox.ShowDialog().Value)
             {
-                var valorDaOperacao = msgBox.TxtValue.Text.ToDecimal();
+                var valorDaOperacao = msgBox.TxtValue.Valor;
                 if (_mvvm.CaixaEstaAberto)
                 {
                     _mvvm.CaixaCorrente.FecharCaixa(valorDaOperacao);
@@ -171,7 +172,7 @@ namespace Syslaps.Pdv.UI.Telas.PDV
             try
             {
                 var qtde = (((sender as TextBox).Parent as WrapPanel).Children[1] as TextBox).Text.ToDecimal();
-                var valor = (((sender as TextBox).Parent as WrapPanel).Children[3] as TextBox).Text.ToDecimal();
+                var valor = (((sender as TextBox).Parent as WrapPanel).Children[3] as TextBoxDinheiro).Valor;
                 var vendaProduto = (VendaProduto)(sender as TextBox).DataContext;
                 _mvvm.AtualizarVendaProduto(vendaProduto, valor, qtde);
             }
@@ -478,7 +479,7 @@ namespace Syslaps.Pdv.UI.Telas.PDV
             if (e.Key == Key.Enter)
             {
                 var qtde = (((sender as TextBox).Parent as WrapPanel).Children[1] as TextBox).Text.ToDecimal();
-                var valor = (((sender as TextBox).Parent as WrapPanel).Children[3] as TextBox).Text.ToDecimal();
+                var valor = (((sender as TextBox).Parent as WrapPanel).Children[3] as TextBoxDinheiro).Valor;
                 var vendaProduto = (VendaProduto)(sender as TextBox).DataContext;
                 _mvvm.AtualizarVendaProduto(vendaProduto, valor, qtde);
             }

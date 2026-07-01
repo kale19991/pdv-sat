@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:producao="clr-namespace:Syslaps.Pdv.UI.Telas.Producao"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:controles="clr-namespace:Syslaps.Pdv.UI.Controles"
         mc:Ignorable="d"
         Title="" Height="300" Width="300" WindowState="Maximized" Closing="Window_Closing" Loaded="Producao_OnLoaded">
     <Grid>
@@ -22,7 +23,7 @@
                 <Label Content="Data da Produção:" FontSize="16" VerticalAlignment="Center" />
                 <DatePicker SelectedDate="{Binding DataDeProducao}" Margin="5,0,5,0" FontSize="16" MinWidth="180" VerticalAlignment="Center"/>
                 <Label Content="Filtrar:" FontSize="16" VerticalAlignment="Center" />
-                <TextBox Text="{Binding FiltrarComEsteTexto, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0" FontSize="16" MinWidth="280" VerticalContentAlignment="Center"/>
+                <controles:TextBoxPadrao Text="{Binding FiltrarComEsteTexto, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0" FontSize="16" MinWidth="280" VerticalContentAlignment="Center"/>
                 <Button Name="BtnConsultarProducao" Margin="10,0,0,0"  Click="BtnConsultarProducao_OnClick">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../Images/consultar-icon.png" Width="45" Height="45" />

@@ -30,7 +30,7 @@ namespace Syslaps.Pdv.Entity
 
         public decimal ValorTotalPagamentoCredito { get; set; }
 
-        public decimal ValorTotalPagamentoTicket { get; set; }
+        public decimal ValorTotalPagamentoOutros { get; set; }
 
         public decimal ValorTotalPagamento { get; set; }
 
@@ -43,8 +43,6 @@ namespace Syslaps.Pdv.Entity
         public decimal ValorRecebimentoDebito { get; set; }
 
         public decimal ValorRecebimentoCretito { get; set; }
-
-        public decimal ValorRecebimentoTicket { get; set; }
 
         public virtual OperacaoCaixa OperacaoCaixa { get; set; }
 
