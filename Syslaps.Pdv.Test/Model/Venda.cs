@@ -16,6 +16,8 @@ namespace Syslaps.Pdv.Test.Model
         [TestMethod]
         public void DevoEfetuarVenda()
         {
+            var bootstrap = ContainerIoc.GetInstance<Bootstrap>();
+            bootstrap.IniciarProcessoCompleto();
 
             var usuario = ContainerIoc.GetInstance<Usuario>();
             usuario.LogarUsuario("admin", "123");
