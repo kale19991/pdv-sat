@@ -84,7 +84,7 @@
                         <TextBlock Grid.Column="0" Text="Localizar Produto: " FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="15,0,0,0"/>
                         <controles:TextBoxPadrao Grid.Column="1"  x:Name="TxtProduto" Text="{Binding FiltrarComEsteTexto, UpdateSourceTrigger=PropertyChanged}" Height="63" FontSize="36"  Margin="15, 0, 25, 0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" />
                         <TextBlock Grid.Column="2" x:Name="LblNrComanda" Text="Comanda: " Visibility="Collapsed" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                        <TextBox Grid.Column="3" x:Name="TxtNrComanda" Text="{Binding NumeroComanda}"  Visibility="Collapsed"  Height="63" FontSize="36"  Margin="15, 0, 25, 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" KeyDown="TxtNrComanda_OnKeyDown" LostFocus="TxtNrComanda_OnLostFocus" />
+                        <controles:TextBoxPadrao Grid.Column="3" x:Name="TxtNrComanda" Text="{Binding NumeroComanda}"  Visibility="Collapsed"  Height="63" FontSize="36"  Margin="15, 0, 25, 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" KeyDown="TxtNrComanda_OnKeyDown" LostFocus="TxtNrComanda_OnLostFocus" />
                     </Grid>
                 </DockPanel>
                 <Border  Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
