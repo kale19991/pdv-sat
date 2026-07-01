@@ -7,9 +7,9 @@ namespace Syslaps.Pdv.Infra.Repositorio
     public sealed class RepositorioUsuario : RepositorioBase, IUsuarioRepositorio
     {
 
-        public Usuario RecuperarUsuario(string nome, string senha)
+        public Usuario RecuperarUsuarioPorNome(string nome)
         {
-            return Db.QuerySingleOrDefault<Usuario>("select * from Usuario Where Nome = @Nome and Senha = @Senha", new  { Nome = nome, Senha = senha });
+            return Db.QuerySingleOrDefault<Usuario>("select * from Usuario Where Nome = @Nome", new { Nome = nome });
         }
 
         

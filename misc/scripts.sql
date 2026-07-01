@@ -335,7 +335,7 @@ DROP TABLE IF EXISTS Usuario;
 CREATE TABLE Usuario (
     CodigoUsuario VARCHAR (32) NOT NULL,
     Nome          VARCHAR (60) NOT NULL,
-    Senha         VARCHAR (20) NOT NULL,
+    Senha         VARCHAR (200) NOT NULL,
     Tipo          VARCHAR (15) NOT NULL,
     Sincronizado  BIT          NOT NULL
                                DEFAULT (0),

@@ -16,9 +16,10 @@ namespace Syslaps.Pdv.Core.Dominio.Usuario
 
         public void LogarUsuario(string nome, string senha)
         {
-            UsuarioLogado = repositorio.RecuperarUsuario(nome, senha);
-            if (UsuarioLogado == null)
+            UsuarioLogado = repositorio.RecuperarUsuarioPorNome(nome);
+            if (UsuarioLogado == null || !HashDeSenha.Validar(senha, UsuarioLogado.Senha))
             {
+                UsuarioLogado = null;
                 AdicionarMensagem("Usuário ou senha inválidos.", EnumStatusDoResultado.RegraDeNegocioInvalida);
             }
         }
@@ -28,7 +29,7 @@ namespace Syslaps.Pdv.Core.Dominio.Usuario
             UsuarioLogado = new Entity.Usuario();
             UsuarioLogado.CodigoUsuario = GerarCodigoUnico();
             UsuarioLogado.Nome = nome;
-            UsuarioLogado.Senha = senha;
+            UsuarioLogado.Senha = HashDeSenha.GerarHash(senha);
             UsuarioLogado.Tipo = tipoUsuario.ToString();
             ValidarEPersistir();
         }

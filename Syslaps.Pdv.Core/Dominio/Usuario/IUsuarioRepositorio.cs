@@ -4,6 +4,6 @@ namespace Syslaps.Pdv.Core.Dominio.Usuario
 {
     public interface IUsuarioRepositorio : IRepositorioBase
     {
-        Entity.Usuario RecuperarUsuario(string nome, string senha);
+        Entity.Usuario RecuperarUsuarioPorNome(string nome);
     }
 }
