@@ -19,7 +19,7 @@ namespace Syslaps.Pdv.Entity
 
         [Required]
         [StringLength(20)]
-        public string Cnpj { get; set; }
+        public string CpfCnpj { get; set; }
 
         [StringLength(20)]
         public string InscricaoEstadual { get; set; }

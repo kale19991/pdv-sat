@@ -41,7 +41,7 @@ CREATE TABLE Empresa (
   CodigoEmpresa     VARCHAR(32)  NOT NULL,
   RazaoSocial       VARCHAR(120) NOT NULL,
   NomeFantasia      VARCHAR(120),
-  Cnpj              VARCHAR(20)  NOT NULL,
+  CpfCnpj           VARCHAR(20)  NOT NULL,
   InscricaoEstadual VARCHAR(20),
   Endereco          VARCHAR(250),
   Numero            VARCHAR(20),

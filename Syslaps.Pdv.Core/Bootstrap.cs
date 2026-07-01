@@ -22,18 +22,22 @@ namespace Syslaps.Pdv.Core
         private readonly IProdutoRepositorio _produtoRepositorio;
         private readonly IRepositorioBase _repositorio;
         private readonly IRepositorioCriarBaseDeDados _repositorioCriarBaseDeDados;
+        private readonly Dominio.Empresa.IEmpresaRepositorio _empresaRepositorio;
+        private readonly IUsuarioEmpresaRepositorio _usuarioEmpresaRepositorio;
         private readonly IInfraLogger _logger;
         private List<ConfiguracaoCategoriaProduto> _listaCategoriaConfiguracao;
         private int _codigoDoCumpom = 1;
 
         private string CodigoDoCupom => (_codigoDoCumpom++).ToString().PadLeft(4, '0');
 
-        public Bootstrap(IUsuarioRepositorio usuarioRepositorio, IProdutoRepositorio produtoRepositorio, IRepositorioBase repositorio, IRepositorioCriarBaseDeDados repositorioCriarBaseDeDados, IInfraLogger logger)
+        public Bootstrap(IUsuarioRepositorio usuarioRepositorio, IProdutoRepositorio produtoRepositorio, IRepositorioBase repositorio, IRepositorioCriarBaseDeDados repositorioCriarBaseDeDados, Dominio.Empresa.IEmpresaRepositorio empresaRepositorio, IUsuarioEmpresaRepositorio usuarioEmpresaRepositorio, IInfraLogger logger)
         {
             this._usuarioRepositorio = usuarioRepositorio;
             this._produtoRepositorio = produtoRepositorio;
             this._repositorio = repositorio;
             _repositorioCriarBaseDeDados = repositorioCriarBaseDeDados;
+            _empresaRepositorio = empresaRepositorio;
+            _usuarioEmpresaRepositorio = usuarioEmpresaRepositorio;
             _logger = logger;
         }
 
@@ -49,10 +53,44 @@ namespace Syslaps.Pdv.Core
             EtapaHandler?.Invoke("Criação do Banco de dados Concluída...");
             EtapaHandler?.Invoke("Inciar criação dos dados base...");
             CriarDadosIniciais();
+            CriarEmpresaEUsuarioPadrao();
             ImportarProdutos();
             _repositorioCriarBaseDeDados.Vacuum();
             EtapaHandler?.Invoke("Base limpa e pronta para operação...");
             EtapaHandler?.Invoke("#### Processo Completo Finalizado ####");
+        }
+
+        /// <summary>
+        /// Cria uma empresa e um usuário administrador padrão quando nenhum usuário
+        /// existe ainda, para que <see cref="IniciarProcessoCompleto"/> devolva um
+        /// banco pronto para uso (empresa, usuário e importação de produtos exigem
+        /// uma empresa corrente em <see cref="ContextoAtual"/>).
+        /// </summary>
+        private void CriarEmpresaEUsuarioPadrao()
+        {
+            if (_usuarioRepositorio.ExisteAlgumUsuario()) return;
+
+            var empresa = new Dominio.Empresa.Empresa(_empresaRepositorio, _usuarioEmpresaRepositorio);
+            empresa.RegistrarNovaEmpresa(new Empresa { RazaoSocial = "Loja", NomeFantasia = "Loja", CpfCnpj = "11.111.111/1111-11" });
+            if (empresa.Status != EnumStatusDoResultado.MensagemDeSucesso)
+            {
+                AdicionarMensagem(empresa.Mensagem, EnumStatusDoResultado.ErroGerenciado);
+                return;
+            }
+
+            ContextoAtual.CodigoEmpresaAtual = empresa.EmpresaCorrente.CodigoEmpresa;
+
+            var usuario = new Dominio.Usuario.Usuario(_usuarioRepositorio);
+            usuario.RegistrarNovoUsuario("admin", "123", EnumTipoUsuario.Administrador);
+            if (usuario.Status != EnumStatusDoResultado.MensagemDeSucesso)
+            {
+                AdicionarMensagem(usuario.Mensagem, EnumStatusDoResultado.ErroGerenciado);
+                return;
+            }
+
+            empresa.VincularUsuario(usuario.UsuarioLogado.CodigoUsuario, empresa.EmpresaCorrente.CodigoEmpresa);
+            SemearDadosDaEmpresa(empresa.EmpresaCorrente.CodigoEmpresa);
+            EtapaHandler?.Invoke("Empresa e usuário padrão criados...");
         }
 
         public void ExcluirTabelas()
