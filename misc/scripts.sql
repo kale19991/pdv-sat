@@ -114,7 +114,8 @@ CREATE TABLE ConfiguracaoCategoriaProduto (
     Sincronizado          BIT          NOT NULL
                                 DEFAULT (0),
     PRIMARY KEY (
-        Categoria
+        Categoria,
+        Empresa_CodigoEmpresa
     ),
     FOREIGN KEY (
         Empresa_CodigoEmpresa

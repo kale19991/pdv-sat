@@ -199,7 +199,7 @@ CREATE TABLE ConfiguracaoCategoriaProduto (
   TemProducao           BIT         NOT NULL,
   DescontaInsumo        BIT         NOT NULL,
   Sincronizado          BIT         NOT NULL DEFAULT 0,
-  PRIMARY KEY (Categoria),
+  PRIMARY KEY (Categoria, Empresa_CodigoEmpresa),
   FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 

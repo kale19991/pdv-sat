@@ -10,6 +10,7 @@ namespace Syslaps.Pdv.Entity
         [StringLength(60)]
         public string Categoria { get; set; }
 
+        [Key]
         [Required]
         [StringLength(32)]
         public string Empresa_CodigoEmpresa { get; set; }
