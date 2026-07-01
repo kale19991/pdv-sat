@@ -57,7 +57,9 @@
     <Compile Include="Comanda.cs" />
     <Compile Include="ComandaProduto.cs" />
     <Compile Include="ConfiguracaoCategoriaProduto.cs" />
+    <Compile Include="Empresa.cs" />
     <Compile Include="Especializadas\TotalVendido.cs" />
+    <Compile Include="IEntidadeDaEmpresa.cs" />
     <Compile Include="OperacaoCaixa.cs" />
     <Compile Include="Parametro.cs" />
     <Compile Include="Pedido.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="SAT\SendResponse.cs" />
     <Compile Include="TipoPagamento.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="UsuarioEmpresa.cs" />
     <Compile Include="CupomFiscalSat.cs" />
     <Compile Include="Venda.cs" />
     <Compile Include="VendaPagamento.cs" />

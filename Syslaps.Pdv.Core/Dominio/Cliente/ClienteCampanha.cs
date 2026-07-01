@@ -18,6 +18,7 @@ namespace Syslaps.Pdv.Core.Dominio.Cliente
             if (string.IsNullOrEmpty(clienteCampanha.CodigoClienteCampanha))
             {
                 clienteCampanha.CodigoClienteCampanha = GerarCodigoUnico();
+                clienteCampanha.Empresa_CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual;
                 clienteCampanha.NomeCampanha = tipoCampanha.ToString();
                 clienteCampanha.DataCadastro = DateTime.Now;
                 _repositorio.Inserir(clienteCampanha);

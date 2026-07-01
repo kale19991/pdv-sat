@@ -3,6 +3,7 @@ using Syslaps.Pdv.Core.Dominio.Base;
 using Syslaps.Pdv.Core.Dominio.Caixa;
 using Syslaps.Pdv.Core.Dominio.Cliente;
 using Syslaps.Pdv.Core.Dominio.Comanda;
+using Syslaps.Pdv.Core.Dominio.Empresa;
 using Syslaps.Pdv.Core.Dominio.Impressora;
 using Syslaps.Pdv.Core.Dominio.Pedido;
 using Syslaps.Pdv.Core.Dominio.Producao;
@@ -44,6 +45,8 @@ namespace Syslaps.Pdv.UI
                 ioc.For<IPedidoRepositorio>().Use<RepositorioPedido>().Singleton();
                 ioc.For<IPedidoProdutoRepositorio>().Use<RepositorioPedidoProduto>().Singleton();
                 ioc.For<IComandaRepositorio>().Use<RepositorioComanda>().Singleton();
+                ioc.For<IEmpresaRepositorio>().Use<RepositorioEmpresa>().Singleton();
+                ioc.For<IUsuarioEmpresaRepositorio>().Use<RepositorioUsuarioEmpresa>().Singleton();
 
             });
         }

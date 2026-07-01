@@ -4,11 +4,15 @@ namespace Syslaps.Pdv.Entity
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("ConfiguracaoCategoriaProduto")]
-    public partial class ConfiguracaoCategoriaProduto
+    public partial class ConfiguracaoCategoriaProduto : IEntidadeDaEmpresa
     {
         [Key]
         [StringLength(60)]
         public string Categoria { get; set; }
+
+        [Required]
+        [StringLength(32)]
+        public string Empresa_CodigoEmpresa { get; set; }
 
         public bool TemProducao { get; set; }
 

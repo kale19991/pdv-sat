@@ -5,11 +5,15 @@ namespace Syslaps.Pdv.Entity
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("ClienteCampanha")]
-    public partial class ClienteCampanha
+    public partial class ClienteCampanha : IEntidadeDaEmpresa
     {
         [Key]
         [StringLength(32)]
         public string CodigoClienteCampanha { get; set; }
+
+        [Required]
+        [StringLength(32)]
+        public string Empresa_CodigoEmpresa { get; set; }
 
         [Required]
         [StringLength(60)]

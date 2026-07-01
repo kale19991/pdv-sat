@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Dapper.FastCrud;
 using StructureMap.TypeRules;
+using Syslaps.Pdv.Core;
 using Syslaps.Pdv.Core.Dominio.Base;
 using Syslaps.Pdv.Entity;
 
@@ -56,7 +57,13 @@ namespace Syslaps.Pdv.Infra.Repositorio
 
         public List<TEntity> RecuperarTodos<TEntity>()
         {
-            return Db.Query<TEntity>($"select * from {typeof(TEntity).GetName()}").ToList();
+            var nomeDaTabela = typeof(TEntity).GetName();
+
+            if (typeof(IEntidadeDaEmpresa).IsAssignableFrom(typeof(TEntity)))
+                return Db.Query<TEntity>($"select * from {nomeDaTabela} where Empresa_CodigoEmpresa = @CodigoEmpresa",
+                    new { CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual }).ToList();
+
+            return Db.Query<TEntity>($"select * from {nomeDaTabela}").ToList();
         }
 
         public bool TabelasExistem()

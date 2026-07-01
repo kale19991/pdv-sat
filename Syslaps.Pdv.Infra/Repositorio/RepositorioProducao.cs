@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using Syslaps.Pdv.Core;
 using Syslaps.Pdv.Core.Dominio.Producao;
 using Syslaps.Pdv.Entity;
 
@@ -32,7 +33,7 @@ namespace Syslaps.Pdv.Infra.Repositorio
                 @"select sum(pp.QuantidadeProduzida) QtdeProduzida, sum(pp.QuantidadeDescartadaInteira) QtdeDecartadaInteira, sum(pp.QuantidadeDescartadaParcial) QtdeDecartadaParcial, sum((p.PrecoVenda * pp.QuantidadeDescartadaInteira)) ValorEstimado
                     from ProdutoProducao pp inner
                     join Produto p on pp.Produto_CodigoDeBarra = p.CodigoDeBarra
-                    where pp.DataProducao BETWEEN @DataInicio and @DataFim", new { DataInicio = dataInicio, DataFim = dataFim });
+                    where pp.DataProducao BETWEEN @DataInicio and @DataFim and p.Empresa_CodigoEmpresa = @CodigoEmpresa", new { DataInicio = dataInicio, DataFim = dataFim, CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual });
         }
     }
 }

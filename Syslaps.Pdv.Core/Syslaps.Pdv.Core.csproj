@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="ContextoAtual.cs" />
     <Compile Include="Dominio\Base\IEmail.cs" />
     <Compile Include="Dominio\Comanda\Comanda.cs" />
     <Compile Include="Dominio\Comanda\IComandaRepositorio.cs" />
@@ -76,6 +77,8 @@
     <Compile Include="Dominio\Cliente\ClienteCampanha.cs" />
     <Compile Include="Dominio\Cliente\EnumTipoCampanha.cs" />
     <Compile Include="Dominio\Cliente\IClienteCampanhaRepositorio.cs" />
+    <Compile Include="Dominio\Empresa\Empresa.cs" />
+    <Compile Include="Dominio\Empresa\IEmpresaRepositorio.cs" />
     <Compile Include="Dominio\Impressora\Cupom.cs" />
     <Compile Include="Dominio\Pedido\IPedidoProdutoRepositorio.cs" />
     <Compile Include="Dominio\Pedido\IPedidoRepositorio.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Dominio\SAT\ISat.cs" />
     <Compile Include="Dominio\SAT\Sat.cs" />
     <Compile Include="Dominio\Usuario\EnumTipoUsuario.cs" />
+    <Compile Include="Dominio\Usuario\IUsuarioEmpresaRepositorio.cs" />
     <Compile Include="Dominio\Usuario\IUsuarioRepositorio.cs" />
     <Compile Include="Dominio\Usuario\Usuario.cs" />
     <Compile Include="Dominio\Venda\IVendaRepositorio.cs" />

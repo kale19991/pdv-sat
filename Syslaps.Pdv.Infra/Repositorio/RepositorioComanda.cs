@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using Syslaps.Pdv.Core;
 using Syslaps.Pdv.Core.Dominio.Comanda;
 using Syslaps.Pdv.Entity;
 using Comanda = Syslaps.Pdv.Entity.Comanda;
@@ -14,8 +15,8 @@ namespace Syslaps.Pdv.Infra.Repositorio
         public List<Entity.Comanda> RecuperarListaDeComandasAbertas()
         {
             return Db.Query<Entity.Comanda>(
-                    "Select * From Comanda Where Situacao = @Situcao",
-                    new { Situcao = "aberta" }).ToList();
+                    "Select * From Comanda Where Situacao = @Situcao and Empresa_CodigoEmpresa = @CodigoEmpresa",
+                    new { Situcao = "aberta", CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual }).ToList();
         }
 
         public void ExcluirPorCodigoDaComanda(string codigoDaComanda)
@@ -30,8 +31,8 @@ namespace Syslaps.Pdv.Infra.Repositorio
         public Comanda RecuperarComanda(string codigoDaComanda)
         {
             var comanda = Db.QueryFirstOrDefault<Entity.Comanda>(
-                    "Select * From Comanda Where CodigoComanda = @CodigoComanda and Situacao = @Situacao",
-                    new { CodigoComanda = codigoDaComanda, Situacao = SituacaoComanda.aberta.ToString() });
+                    "Select * From Comanda Where CodigoComanda = @CodigoComanda and Situacao = @Situacao and Empresa_CodigoEmpresa = @CodigoEmpresa",
+                    new { CodigoComanda = codigoDaComanda, Situacao = SituacaoComanda.aberta.ToString(), CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual });
 
             if(comanda!=null)
             comanda.ComandaProdutoes = Db.Query<Entity.ComandaProduto>(

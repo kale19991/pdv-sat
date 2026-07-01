@@ -25,6 +25,7 @@ namespace Syslaps.Pdv.Core.Dominio.Venda
             VendaCorrente = new Entity.Venda
             {
                 CodigoVenda = GerarCodigoUnico(),
+                Empresa_CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual,
                 DataVenda = DateTime.Now,
                 OperacaoCaixa_CodigoOperacaoCaixa = caixaAberto.CaixaCorrente.CodigoOperacaoDeAbertura,
                 Usuario_CodigoUsuario = this._caixaAberto.UsuarioCorrente.CodigoUsuario,

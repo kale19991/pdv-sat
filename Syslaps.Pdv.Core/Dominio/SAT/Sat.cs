@@ -618,6 +618,7 @@ namespace Syslaps.Pdv.Core.Dominio.SAT
             var cupomSat = new Entity.CupomFiscalSat
             {
                 CodigoVenda = _venda.CodigoVenda,
+                Empresa_CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual,
                 CpfCnpj = _venda.SatResponse.CpfCnpj,
                 DataOperacao = DateTime.Now,
                 ErrorCode = _venda.SatResponse.ErrorCode,

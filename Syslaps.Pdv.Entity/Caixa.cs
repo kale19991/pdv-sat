@@ -5,7 +5,7 @@ namespace Syslaps.Pdv.Entity
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Caixa")]
-    public partial class Caixa
+    public partial class Caixa : IEntidadeDaEmpresa
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Caixa()
@@ -16,6 +16,10 @@ namespace Syslaps.Pdv.Entity
         [Key]
         [StringLength(32)]
         public string CodigoCaixa { get; set; }
+
+        [Required]
+        [StringLength(32)]
+        public string Empresa_CodigoEmpresa { get; set; }
 
         [Required]
         [StringLength(80)]

@@ -67,11 +67,6 @@ namespace Syslaps.Pdv.Core
 
         public void CriarDadosIniciais()
         {
-            // criar usuarios
-            var usuario = new Dominio.Usuario.Usuario(_usuarioRepositorio);
-            usuario.RegistrarNovoUsuario("admin", "123", EnumTipoUsuario.Administrador);
-            usuario.RegistrarNovoUsuario("admin2", "123", EnumTipoUsuario.Administrador);
-            EtapaHandler?.Invoke("Usuários criados...");
             _repositorio.Inserir<Parametro>(new Parametro() { Nome = "receiver.email", Valor = "usuario@gmail.com" });
 #if !DEBUG
             _repositorio.Inserir<Parametro>(new Parametro() {Nome = "receiver.email", Valor = "debug@gmail.com"});
@@ -86,55 +81,35 @@ namespace Syslaps.Pdv.Core
 
             _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv.message.title", Valor = "Pdv - SAT" });
 
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.nome", Valor = "Loja" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.cnpj", Valor = "11.111.111/1111-11" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.ie", Valor = "111.111.111.111" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.endereco", Valor = "Av. Avenida, 628" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.numero", Valor = "22775" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.bairro", Valor = "Bairro" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.cidade", Valor = "City - SP" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.telefone", Valor = "(11) 1111-11111 - Whats (11) 11111-1111" });
+            EtapaHandler?.Invoke("Parametros globais criados...");
+        }
 
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.nomefatansia", Valor = "Nome Fantasia" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.empresa.im", Valor = "123456789" });
-
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "sat.signac", Valor = "sdafsdfasdf6876asdfsadifsa87df68asd787das68f76asd8f" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "sat.sh.cnpj", Valor = "1111111111111111111" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "sat.numero", Valor = "111111" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "sat.modelo", Valor = "OffLine" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "sat.habilitado", Valor = "nao" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "sat.codigo", Valor = "12345678" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.numcaixa", Valor = "001" });
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.gaveta.automatica", Valor = "sim" });
-
-            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "cfop.tributos", Valor = "16,20" });
-
-
-            EtapaHandler?.Invoke("Parametros criados...");
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Nome = "Dinheiro", DiasParaPagamento = 0, PercentualDesconto = 0 });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Nome = "Débito Rede", DiasParaPagamento = 1, PercentualDesconto = 2.48m });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Nome = "Débito Moderninha", DiasParaPagamento = 1, PercentualDesconto = 2.39m });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Nome = "Crédito Rede", DiasParaPagamento = 30, PercentualDesconto = 3.78m });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Nome = "Crédito Moderninha", DiasParaPagamento = 30, PercentualDesconto = 3.20m });
-            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Nome = "Tiket", DiasParaPagamento = 30, PercentualDesconto = 30m });
+        public void SemearDadosDaEmpresa(string codigoEmpresa)
+        {
+            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Dinheiro", DiasParaPagamento = 0, PercentualDesconto = 0 });
+            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Débito Rede", DiasParaPagamento = 1, PercentualDesconto = 2.48m });
+            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Débito Moderninha", DiasParaPagamento = 1, PercentualDesconto = 2.39m });
+            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Crédito Rede", DiasParaPagamento = 30, PercentualDesconto = 3.78m });
+            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Crédito Moderninha", DiasParaPagamento = 30, PercentualDesconto = 3.20m });
+            _repositorio.Inserir<TipoPagamento>(new TipoPagamento { CodigoTipoPagamento = GerarCodigoUnico(), Empresa_CodigoEmpresa = codigoEmpresa, Nome = "Tiket", DiasParaPagamento = 30, PercentualDesconto = 30m });
 
             EtapaHandler?.Invoke("Tipo de pagamentos criados...");
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos Fatia", TemProducao = false, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Maquina de Café", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Sobremesas", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Coberturas", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Café de Coador", TemProducao = false, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Cha", TemProducao = false, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos Salgado", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos Naked", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Escondidinho", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Tapioca", TemProducao = false, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolo Inteiro Pequeno", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos Pote", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Brownie", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Cookies", TemProducao = true, DescontaInsumo = true });
-            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Geladinho", TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos Fatia", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = false, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Maquina de Café", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Sobremesas", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Coberturas", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Café de Coador", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = false, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Cha", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = false, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos Salgado", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos Naked", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Escondidinho", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Tapioca", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = false, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolo Inteiro Pequeno", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Bolos Pote", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Brownie", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Cookies", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
+            _repositorio.Inserir<ConfiguracaoCategoriaProduto>(new ConfiguracaoCategoriaProduto { Categoria = "Geladinho", Empresa_CodigoEmpresa = codigoEmpresa, TemProducao = true, DescontaInsumo = true });
             EtapaHandler?.Invoke("Categorias dos produtos criados...");
         }
 
@@ -159,6 +134,7 @@ namespace Syslaps.Pdv.Core
                 var produtosDaPlanilha = data.Select(x =>
                 {
                     var produto = new Produto();
+                    produto.Empresa_CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual;
                     produto.CodigoParaCupom = CodigoDoCupom;
                     produto.Ativo = x.Field<string>("ATIVO").Trim().SimNaoToBool();
                     produto.CodigoDeBarra = x.IsNull("CÓDIGO DE BARRAS")

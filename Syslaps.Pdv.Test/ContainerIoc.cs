@@ -1,6 +1,7 @@
 ﻿using Syslaps.Pdv.Core;
 using Syslaps.Pdv.Core.Dominio.Base;
 using Syslaps.Pdv.Core.Dominio.Caixa;
+using Syslaps.Pdv.Core.Dominio.Empresa;
 using Syslaps.Pdv.Core.Dominio.Impressora;
 using Syslaps.Pdv.Core.Dominio.Producao;
 using Syslaps.Pdv.Core.Dominio.Produto;
@@ -36,6 +37,8 @@ namespace Syslaps.Pdv.Test
                 ioc.For<IInfraLogger>().Use<Logger>().Singleton();
                 ioc.For<Parametros>().Use<Parametros>().Singleton();
                 ioc.For<IRepositorioCriarBaseDeDados>().Use<RepositorioCriarBaseDeDados>().Singleton();
+                ioc.For<IEmpresaRepositorio>().Use<RepositorioEmpresa>().Singleton();
+                ioc.For<IUsuarioEmpresaRepositorio>().Use<RepositorioUsuarioEmpresa>().Singleton();
 
             });
         }

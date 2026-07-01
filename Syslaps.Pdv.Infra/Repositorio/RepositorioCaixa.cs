@@ -2,6 +2,7 @@
 using System.Linq;
 using Dapper;
 using Dapper.FastCrud;
+using Syslaps.Pdv.Core;
 using Syslaps.Pdv.Core.Dominio.Caixa;
 using Syslaps.Pdv.Entity;
 using Caixa = Syslaps.Pdv.Entity.Caixa;
@@ -12,7 +13,8 @@ namespace Syslaps.Pdv.Infra.Repositorio
     {
         public Caixa RecuperarCaixaPorNome(string nomeDoCaixa)
         {
-            return Db.QuerySingleOrDefault<Caixa>("select * from Caixa where Nome = @Nome", new Entity.Caixa() { Nome = nomeDoCaixa });
+            return Db.QuerySingleOrDefault<Caixa>("select * from Caixa where Nome = @Nome and Empresa_CodigoEmpresa = @Empresa_CodigoEmpresa",
+                new Entity.Caixa { Nome = nomeDoCaixa, Empresa_CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual });
         }
 
         public OperacaoCaixa RecuperarOperacaoCaixa(string codigo)

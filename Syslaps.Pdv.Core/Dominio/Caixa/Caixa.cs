@@ -221,6 +221,7 @@ namespace Syslaps.Pdv.Core.Dominio.Caixa
             var novoCaixa = new Entity.Caixa
             {
                 CodigoCaixa = GerarCodigoUnico(),
+                Empresa_CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual,
                 Nome = nomeDeRegistroDoCaixa,
                 Situacao = EnumCaixaSituacao.Fechado.ToString(),
                 CodigoOperacaoDeAbertura = "",
@@ -240,6 +241,7 @@ namespace Syslaps.Pdv.Core.Dominio.Caixa
             var operacao = new Entity.OperacaoCaixa
             {
                 CodigoOperacaoCaixa = GerarCodigoUnico(),
+                Empresa_CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual,
                 Caixa_CodigoCaixa = CaixaCorrente.CodigoCaixa,
                 Usuario_CodigoUsuario = UsuarioCorrente.CodigoUsuario,
                 DataOperacao = DateTime.Now,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using Syslaps.Pdv.Core;
 using Syslaps.Pdv.Core.Dominio.Pedido;
 using Syslaps.Pdv.Core.Dominio.Produto;
 using Syslaps.Pdv.Entity;
@@ -20,8 +21,8 @@ namespace Syslaps.Pdv.Infra.Repositorio
         public List<Entity.Pedido> RecuperarPedidosPorDataDaEntrega(DateTime dataInicio, DateTime dataFim)
         {
 
-            var list = Db.Query<Entity.Pedido>("select * from Pedido where DataEntrega between @DataPedidoInicio and @DataPedidoFim",
-                new { DataPedidoInicio = dataInicio, DataPedidoFim = dataFim });
+            var list = Db.Query<Entity.Pedido>("select * from Pedido where DataEntrega between @DataPedidoInicio and @DataPedidoFim and Empresa_CodigoEmpresa = @CodigoEmpresa",
+                new { DataPedidoInicio = dataInicio, DataPedidoFim = dataFim, CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual });
 
             return list.Select(c => new Entity.Pedido
             {

@@ -97,6 +97,7 @@ namespace Syslaps.Pdv.Core.Dominio.Pedido
                 _pedidoRepositorio.Excluir(PedidoCorrente);
 
                 PedidoCorrente.CodigoPedido = GerarCodigoUnico();
+                PedidoCorrente.Empresa_CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual;
                 _pedidoRepositorio.Inserir(PedidoCorrente);
                 PedidoCorrente.PedidoProduto.ToList().ForEach(item =>
                 {

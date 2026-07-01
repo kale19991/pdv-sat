@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using Syslaps.Pdv.Core;
 using Syslaps.Pdv.Core.Dominio.Venda;
 using Syslaps.Pdv.Entity;
 using Syslaps.Pdv.Entity.Especializadas;
@@ -13,7 +14,8 @@ namespace Syslaps.Pdv.Infra.Repositorio
     {
         public List<Venda> RecuperarListaDasVendasDaOperacaoDeAbertura(string codigoDaOperacaoDeAbertura)
         {
-            return Db.Query<Venda>("select * from Venda Where OperacaoCaixa_CodigoOperacaoCaixa = @OperacaoCaixa_CodigoOperacaoCaixa", new { OperacaoCaixa_CodigoOperacaoCaixa = codigoDaOperacaoDeAbertura }).ToList();
+            return Db.Query<Venda>("select * from Venda Where OperacaoCaixa_CodigoOperacaoCaixa = @OperacaoCaixa_CodigoOperacaoCaixa and Empresa_CodigoEmpresa = @CodigoEmpresa",
+                new { OperacaoCaixa_CodigoOperacaoCaixa = codigoDaOperacaoDeAbertura, CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual }).ToList();
         }
 
         public List<VendaPagamento> RecuperarListaDosPagamentosDaVenda(string codigoDaVenda)
@@ -23,13 +25,14 @@ namespace Syslaps.Pdv.Infra.Repositorio
 
         public TotalVendido RecuperarTotalDeVendaDoPeriodo(DateTime dataInicial, DateTime dataFinal)
         {
-            return Db.Query<TotalVendido>("select count(*) Quantidade, sum(valortotalvenda) ValorTotal from venda where datavenda between @DataInicial and @DataFinal", new { DataInicial = dataInicial, DataFinal = dataFinal }).SingleOrDefault();
+            return Db.Query<TotalVendido>("select count(*) Quantidade, sum(valortotalvenda) ValorTotal from venda where datavenda between @DataInicial and @DataFinal and Empresa_CodigoEmpresa = @CodigoEmpresa",
+                new { DataInicial = dataInicial, DataFinal = dataFinal, CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual }).SingleOrDefault();
         }
 
         public List<Venda> RecuperarVendasDoPeriodo(DateTime dataInicial, DateTime dataFinal)
         {
-            var vendas = Db.Query<Venda>( "select * from Venda where datavenda between @DataInicial and @DataFinal order by datavenda",
-                    new {DataInicial = dataInicial, DataFinal = dataFinal}).ToList();
+            var vendas = Db.Query<Venda>( "select * from Venda where datavenda between @DataInicial and @DataFinal and Empresa_CodigoEmpresa = @CodigoEmpresa order by datavenda",
+                    new {DataInicial = dataInicial, DataFinal = dataFinal, CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual}).ToList();
 
             vendas.ForEach(item =>
             {

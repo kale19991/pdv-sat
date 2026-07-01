@@ -24,10 +24,12 @@ DROP TABLE IF EXISTS Caixa;
 DROP TABLE IF EXISTS ClienteCampanha;
 DROP TABLE IF EXISTS Comanda;
 DROP TABLE IF EXISTS TipoPagamento;
+DROP TABLE IF EXISTS UsuarioEmpresa;
 DROP TABLE IF EXISTS Usuario;
 DROP TABLE IF EXISTS Produto;
 DROP TABLE IF EXISTS Parametro;
 DROP TABLE IF EXISTS Pedido;
+DROP TABLE IF EXISTS Empresa;
 ";
             ExecutarBlocoSql(sql);
         }
@@ -35,19 +37,45 @@ DROP TABLE IF EXISTS Pedido;
         public void CriarDataBase()
         {
             var sql = @"
+CREATE TABLE Empresa (
+  CodigoEmpresa     VARCHAR(32)  NOT NULL,
+  RazaoSocial       VARCHAR(120) NOT NULL,
+  NomeFantasia      VARCHAR(120),
+  Cnpj              VARCHAR(20)  NOT NULL,
+  InscricaoEstadual VARCHAR(20),
+  Endereco          VARCHAR(250),
+  Numero            VARCHAR(20),
+  Bairro            VARCHAR(80),
+  Cidade            VARCHAR(80),
+  Uf                VARCHAR(2),
+  Cep               VARCHAR(10),
+  Telefone          VARCHAR(20),
+  Email             VARCHAR(120),
+  CodigoAtivacaoSat VARCHAR(100),
+  ModeloSat         VARCHAR(20),
+  Ativa             BIT          NOT NULL DEFAULT 1,
+  Sincronizado      BIT          NOT NULL DEFAULT 0,
+  PRIMARY KEY (CodigoEmpresa)
+);
+
 CREATE TABLE Caixa (
   CodigoCaixa              VARCHAR(32)  NOT NULL,
+  Empresa_CodigoEmpresa    VARCHAR(32)  NOT NULL,
   Nome                     VARCHAR(80)  NOT NULL,
   Machine                  VARCHAR(60)  NOT NULL,
   IP                       VARCHAR(20)  NOT NULL,
   Situacao                 VARCHAR(15)  NOT NULL DEFAULT Fechado,
   CodigoOperacaoDeAbertura VARCHAR(32),
   Sincronizado             BIT          NOT NULL DEFAULT 0,
-  PRIMARY KEY (CodigoCaixa)
+  PRIMARY KEY (CodigoCaixa),
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+CREATE INDEX Caixa_FKIndex1 ON Caixa (Empresa_CodigoEmpresa);
 
 CREATE TABLE ClienteCampanha (
   CodigoClienteCampanha VARCHAR(32)  NOT NULL,
+  Empresa_CodigoEmpresa VARCHAR(32)  NOT NULL,
   NomeCampanha          VARCHAR(60)  NOT NULL,
   CpfCnpj               VARCHAR(20)  NOT NULL,
   Email                 VARCHAR(120) NOT NULL,
@@ -56,15 +84,22 @@ CREATE TABLE ClienteCampanha (
   DataCadastro          DATETIME     NOT NULL,
   Observacao            VARCHAR(500),
   Sincronizado          BIT          NOT NULL DEFAULT 0,
-  PRIMARY KEY (CodigoClienteCampanha)
+  PRIMARY KEY (CodigoClienteCampanha),
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
+CREATE INDEX ClienteCampanha_FKIndex1 ON ClienteCampanha (Empresa_CodigoEmpresa);
+
 CREATE TABLE Comanda (
-  CodigoComanda VARCHAR(15)  NOT NULL,
-  Situacao      VARCHAR(20)  NOT NULL,
-  Sincronizado  BIT          NOT NULL DEFAULT 0,
-  PRIMARY KEY (CodigoComanda)
+  CodigoComanda         VARCHAR(15)  NOT NULL,
+  Empresa_CodigoEmpresa VARCHAR(32)  NOT NULL,
+  Situacao              VARCHAR(20)  NOT NULL,
+  Sincronizado          BIT          NOT NULL DEFAULT 0,
+  PRIMARY KEY (CodigoComanda),
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+CREATE INDEX Comanda_FKIndex1 ON Comanda (Empresa_CodigoEmpresa);
 
 CREATE TABLE Parametro (
   Nome         VARCHAR(120)  NOT NULL,
@@ -74,20 +109,25 @@ CREATE TABLE Parametro (
 );
 
 CREATE TABLE Pedido (
-  CodigoPedido VARCHAR(32)  NOT NULL,
-  DataPedido   DATETIME     NOT NULL,
-  DataEntrega  DATETIME     NOT NULL,
-  NomeCliente  VARCHAR(80)  NOT NULL,
-  Telefone     VARCHAR(20),
-  Situacao     VARCHAR(15)  NOT NULL,
-  Observacao   VARCHAR(500),
-  Valor        DECIMAL      NOT NULL DEFAULT 0,
-  Sincronizado BIT          NOT NULL DEFAULT 0,
-  PRIMARY KEY (CodigoPedido)
+  CodigoPedido          VARCHAR(32)  NOT NULL,
+  Empresa_CodigoEmpresa VARCHAR(32)  NOT NULL,
+  DataPedido            DATETIME     NOT NULL,
+  DataEntrega           DATETIME     NOT NULL,
+  NomeCliente           VARCHAR(80)  NOT NULL,
+  Telefone              VARCHAR(20),
+  Situacao              VARCHAR(15)  NOT NULL,
+  Observacao            VARCHAR(500),
+  Valor                 DECIMAL      NOT NULL DEFAULT 0,
+  Sincronizado          BIT          NOT NULL DEFAULT 0,
+  PRIMARY KEY (CodigoPedido),
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+CREATE INDEX Pedido_FKIndex1 ON Pedido (Empresa_CodigoEmpresa);
 
 CREATE TABLE Produto (
   CodigoDeBarra          VARCHAR(32)  NOT NULL,
+  Empresa_CodigoEmpresa  VARCHAR(32)  NOT NULL,
   TipoProduto            VARCHAR(15)  NOT NULL,
   Modelo                 VARCHAR(60)  NOT NULL,
   Descricao              VARCHAR(250) NOT NULL,
@@ -112,10 +152,12 @@ CREATE TABLE Produto (
   CodigoParaCupom        VARCHAR(4)   NOT NULL,
   Sincronizado           BIT          NOT NULL DEFAULT 0,
   QtdeEstoque            DECIMAL      NOT NULL DEFAULT 0,
-  PRIMARY KEY (CodigoDeBarra)
+  PRIMARY KEY (CodigoDeBarra),
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE INDEX Produto_DescricaoBusca ON Produto (DescricaoBusca);
+CREATE INDEX Produto_FKIndex1 ON Produto (Empresa_CodigoEmpresa);
 
 CREATE TABLE Usuario (
   CodigoUsuario VARCHAR(32)  NOT NULL,
@@ -126,22 +168,42 @@ CREATE TABLE Usuario (
   PRIMARY KEY (CodigoUsuario)
 );
 
-CREATE TABLE TipoPagamento (
-  CodigoTipoPagamento VARCHAR(32)  NOT NULL,
-  Nome                VARCHAR(30)  NOT NULL,
-  PercentualDesconto  DECIMAL      NOT NULL,
-  DiasParaPagamento   INTEGER      NOT NULL,
-  Sincronizado        BIT          NOT NULL DEFAULT 0,
-  PRIMARY KEY (CodigoTipoPagamento)
+CREATE TABLE UsuarioEmpresa (
+  Usuario_CodigoUsuario VARCHAR(32) NOT NULL,
+  Empresa_CodigoEmpresa VARCHAR(32) NOT NULL,
+  Sincronizado          BIT         NOT NULL DEFAULT 0,
+  PRIMARY KEY (Usuario_CodigoUsuario, Empresa_CodigoEmpresa),
+  FOREIGN KEY (Usuario_CodigoUsuario) REFERENCES Usuario (CodigoUsuario) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE ConfiguracaoCategoriaProduto (
-  Categoria      VARCHAR(60) NOT NULL,
-  TemProducao    BIT         NOT NULL,
-  DescontaInsumo BIT         NOT NULL,
-  Sincronizado   BIT         NOT NULL DEFAULT 0,
-  PRIMARY KEY (Categoria)
+CREATE INDEX UsuarioEmpresa_FKIndex1 ON UsuarioEmpresa (Usuario_CodigoUsuario);
+CREATE INDEX UsuarioEmpresa_FKIndex2 ON UsuarioEmpresa (Empresa_CodigoEmpresa);
+
+CREATE TABLE TipoPagamento (
+  CodigoTipoPagamento   VARCHAR(32)  NOT NULL,
+  Empresa_CodigoEmpresa VARCHAR(32)  NOT NULL,
+  Nome                  VARCHAR(30)  NOT NULL,
+  PercentualDesconto    DECIMAL      NOT NULL,
+  DiasParaPagamento     INTEGER      NOT NULL,
+  Sincronizado          BIT          NOT NULL DEFAULT 0,
+  PRIMARY KEY (CodigoTipoPagamento),
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+CREATE INDEX TipoPagamento_FKIndex1 ON TipoPagamento (Empresa_CodigoEmpresa);
+
+CREATE TABLE ConfiguracaoCategoriaProduto (
+  Categoria             VARCHAR(60) NOT NULL,
+  Empresa_CodigoEmpresa VARCHAR(32) NOT NULL,
+  TemProducao           BIT         NOT NULL,
+  DescontaInsumo        BIT         NOT NULL,
+  Sincronizado          BIT         NOT NULL DEFAULT 0,
+  PRIMARY KEY (Categoria),
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+CREATE INDEX ConfiguracaoCategoriaProduto_FKIndex1 ON ConfiguracaoCategoriaProduto (Empresa_CodigoEmpresa);
 
 CREATE TABLE ProdutoProducao (
   CodigoProdutoProducao       VARCHAR(32) NOT NULL,
@@ -160,6 +222,7 @@ CREATE INDEX IFK_Rel_18 ON ProdutoProducao (Produto_CodigoDeBarra);
 
 CREATE TABLE OperacaoCaixa (
   CodigoOperacaoCaixa         VARCHAR(32) NOT NULL,
+  Empresa_CodigoEmpresa       VARCHAR(32) NOT NULL,
   Usuario_CodigoUsuario       VARCHAR(32) NOT NULL,
   Caixa_CodigoCaixa           VARCHAR(32) NOT NULL,
   DataOperacao                DATETIME    NOT NULL,
@@ -169,11 +232,13 @@ CREATE TABLE OperacaoCaixa (
   Sincronizado                BIT         NOT NULL DEFAULT 0,
   PRIMARY KEY (CodigoOperacaoCaixa),
   FOREIGN KEY (Caixa_CodigoCaixa) REFERENCES Caixa (CodigoCaixa) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (Usuario_CodigoUsuario) REFERENCES Usuario (CodigoUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION
+  FOREIGN KEY (Usuario_CodigoUsuario) REFERENCES Usuario (CodigoUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE INDEX OperacaoCaixa_FKIndex1 ON OperacaoCaixa (Caixa_CodigoCaixa);
 CREATE INDEX OperacaoCaixa_FKIndex2 ON OperacaoCaixa (Usuario_CodigoUsuario);
+CREATE INDEX OperacaoCaixa_FKIndex3 ON OperacaoCaixa (Empresa_CodigoEmpresa);
 CREATE INDEX IFK_Rel_15 ON OperacaoCaixa (Caixa_CodigoCaixa);
 CREATE INDEX IFK_Rel_10 ON OperacaoCaixa (Usuario_CodigoUsuario);
 
@@ -237,6 +302,7 @@ CREATE INDEX IFK_Rel_12 ON ResultadoOperacaoFechamento (OperacaoCaixa_CodigoOper
 
 CREATE TABLE Venda (
   CodigoVenda                       VARCHAR(40) NOT NULL,
+  Empresa_CodigoEmpresa             VARCHAR(32) NOT NULL,
   OperacaoCaixa_CodigoOperacaoCaixa VARCHAR(32) NOT NULL,
   Usuario_CodigoUsuario             VARCHAR(32) NOT NULL,
   ValorTotalVenda                   DECIMAL     NOT NULL,
@@ -251,34 +317,39 @@ CREATE TABLE Venda (
   CFOP                              INTEGER     NOT NULL,
   PRIMARY KEY (CodigoVenda),
   FOREIGN KEY (Usuario_CodigoUsuario) REFERENCES Usuario (CodigoUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  FOREIGN KEY (OperacaoCaixa_CodigoOperacaoCaixa) REFERENCES OperacaoCaixa (CodigoOperacaoCaixa) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (OperacaoCaixa_CodigoOperacaoCaixa) REFERENCES OperacaoCaixa (CodigoOperacaoCaixa) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE INDEX Venda_FKIndex1 ON Venda (Usuario_CodigoUsuario);
 CREATE INDEX Venda_FKIndex2 ON Venda (OperacaoCaixa_CodigoOperacaoCaixa);
+CREATE INDEX Venda_FKIndex3 ON Venda (Empresa_CodigoEmpresa);
 CREATE INDEX IFK_Rel_11 ON Venda (Usuario_CodigoUsuario);
 CREATE INDEX IFK_Rel_14 ON Venda (OperacaoCaixa_CodigoOperacaoCaixa);
 
 CREATE TABLE CupomFiscalSat (
-  CodigoVenda     VARCHAR(32)   NOT NULL,
-  CpfCnpj         VARCHAR(20),
-  ErrorCode       VARCHAR(200),
-  ErrorCode2      VARCHAR(200),
-  ErrorMessage    VARCHAR(200),
-  InvoiceKey      VARCHAR(100),
-  QrCodeSignature VARCHAR(500),
-  SessionCode     VARCHAR(15),
-  TimeStamp       VARCHAR(15),
-  Total           VARCHAR(15),
-  Xml             VARCHAR(5000),
-  DataOperacao    DATETIME,
-  CodigoSat       VARCHAR(20),
-  XmlEnvio        VARCHAR(5000),
+  CodigoVenda           VARCHAR(32)   NOT NULL,
+  Empresa_CodigoEmpresa VARCHAR(32)   NOT NULL,
+  CpfCnpj               VARCHAR(20),
+  ErrorCode             VARCHAR(200),
+  ErrorCode2            VARCHAR(200),
+  ErrorMessage          VARCHAR(200),
+  InvoiceKey            VARCHAR(100),
+  QrCodeSignature       VARCHAR(500),
+  SessionCode           VARCHAR(15),
+  TimeStamp             VARCHAR(15),
+  Total                 VARCHAR(15),
+  Xml                   VARCHAR(5000),
+  DataOperacao          DATETIME,
+  CodigoSat             VARCHAR(20),
+  XmlEnvio              VARCHAR(5000),
   PRIMARY KEY (CodigoVenda),
-  FOREIGN KEY (CodigoVenda) REFERENCES Venda (CodigoVenda) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (CodigoVenda) REFERENCES Venda (CodigoVenda) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (Empresa_CodigoEmpresa) REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE INDEX CupomFiscalSat_FKIndex1 ON CupomFiscalSat (CodigoVenda);
+CREATE INDEX CupomFiscalSat_FKIndex2 ON CupomFiscalSat (Empresa_CodigoEmpresa);
 CREATE INDEX IFK_Rel_1555 ON CupomFiscalSat (CodigoVenda);
 
 CREATE TABLE VendaProduto (

@@ -52,6 +52,7 @@ namespace Syslaps.Pdv.Core.Dominio.Comanda
             try
             {
                 ComandaCorrente.CodigoComanda = codigoComanda;
+                ComandaCorrente.Empresa_CodigoEmpresa = ContextoAtual.CodigoEmpresaAtual;
                 ComandaCorrente.Situacao = SituacaoComanda.aberta.ToString();
                 ComandaCorrente.Sincronizado = false;
                 _comandaRepositorio.Inserir(ComandaCorrente);

@@ -5,7 +5,7 @@ namespace Syslaps.Pdv.Entity
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("TipoPagamento")]
-    public partial class TipoPagamento
+    public partial class TipoPagamento : IEntidadeDaEmpresa
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TipoPagamento()
@@ -16,6 +16,10 @@ namespace Syslaps.Pdv.Entity
         [Key]
         [StringLength(32)]
         public string CodigoTipoPagamento { get; set; }
+
+        [Required]
+        [StringLength(32)]
+        public string Empresa_CodigoEmpresa { get; set; }
 
         [Required]
         [StringLength(30)]

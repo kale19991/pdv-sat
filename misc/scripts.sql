@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS Caixa;
 
 CREATE TABLE Caixa (
     CodigoCaixa              VARCHAR (32) NOT NULL,
+    Empresa_CodigoEmpresa    VARCHAR (32) NOT NULL,
     Nome                     VARCHAR (80) NOT NULL,
     Machine                  VARCHAR (60) NOT NULL,
     IP                       VARCHAR (20) NOT NULL,
@@ -21,7 +22,12 @@ CREATE TABLE Caixa (
                                           DEFAULT (0),
     PRIMARY KEY (
         CodigoCaixa
+    ),
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
     )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION
 );
 
 
@@ -30,6 +36,7 @@ DROP TABLE IF EXISTS ClienteCampanha;
 
 CREATE TABLE ClienteCampanha (
     CodigoClienteCampanha VARCHAR (32)  NOT NULL,
+    Empresa_CodigoEmpresa VARCHAR (32)  NOT NULL,
     NomeCampanha          VARCHAR (60)  NOT NULL,
     CpfCnpj               VARCHAR (20)  NOT NULL,
     Email                 VARCHAR (120) NOT NULL,
@@ -41,7 +48,12 @@ CREATE TABLE ClienteCampanha (
                                         DEFAULT (0),
     PRIMARY KEY (
         CodigoClienteCampanha
+    ),
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
     )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION
 );
 
 
@@ -49,13 +61,19 @@ CREATE TABLE ClienteCampanha (
 DROP TABLE IF EXISTS Comanda;
 
 CREATE TABLE Comanda (
-    CodigoComanda VARCHAR (15) NOT NULL,
-    Situacao      VARCHAR (20) NOT NULL,
-    Sincronizado  BIT          NOT NULL
+    CodigoComanda         VARCHAR (15) NOT NULL,
+    Empresa_CodigoEmpresa VARCHAR (32) NOT NULL,
+    Situacao              VARCHAR (20) NOT NULL,
+    Sincronizado          BIT          NOT NULL
                                DEFAULT 0,
     PRIMARY KEY (
         CodigoComanda
+    ),
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
     )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION
 );
 
 
@@ -89,14 +107,20 @@ CREATE TABLE ComandaProduto (
 DROP TABLE IF EXISTS ConfiguracaoCategoriaProduto;
 
 CREATE TABLE ConfiguracaoCategoriaProduto (
-    Categoria      VARCHAR (60) NOT NULL,
-    TemProducao    BIT          NOT NULL,
-    DescontaInsumo BIT          NOT NULL,
-    Sincronizado   BIT          NOT NULL
+    Categoria             VARCHAR (60) NOT NULL,
+    Empresa_CodigoEmpresa VARCHAR (32) NOT NULL,
+    TemProducao           BIT          NOT NULL,
+    DescontaInsumo        BIT          NOT NULL,
+    Sincronizado          BIT          NOT NULL
                                 DEFAULT (0),
     PRIMARY KEY (
         Categoria
+    ),
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
     )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION
 );
 
 
@@ -104,20 +128,21 @@ CREATE TABLE ConfiguracaoCategoriaProduto (
 DROP TABLE IF EXISTS CupomFiscalSat;
 
 CREATE TABLE CupomFiscalSat (
-    CodigoVenda     VARCHAR (32)   NOT NULL,
-    CpfCnpj         VARCHAR (20),
-    ErrorCode       VARCHAR (200),
-    ErrorCode2      VARCHAR (200),
-    ErrorMessage    VARCHAR (200),
-    InvoiceKey      VARCHAR (100),
-    QrCodeSignature VARCHAR (500),
-    SessionCode     VARCHAR (15),
-    TimeStamp       VARCHAR (15),
-    Total           VARCHAR (15),
-    Xml             VARCHAR (5000),
-    DataOperacao    DATETIME,
-    CodigoSat       VARCHAR (20),
-    XmlEnvio        VARCHAR (5000),
+    CodigoVenda           VARCHAR (32)   NOT NULL,
+    Empresa_CodigoEmpresa VARCHAR (32)   NOT NULL,
+    CpfCnpj               VARCHAR (20),
+    ErrorCode             VARCHAR (200),
+    ErrorCode2            VARCHAR (200),
+    ErrorMessage          VARCHAR (200),
+    InvoiceKey            VARCHAR (100),
+    QrCodeSignature       VARCHAR (500),
+    SessionCode           VARCHAR (15),
+    TimeStamp             VARCHAR (15),
+    Total                 VARCHAR (15),
+    Xml                   VARCHAR (5000),
+    DataOperacao          DATETIME,
+    CodigoSat             VARCHAR (20),
+    XmlEnvio              VARCHAR (5000),
     PRIMARY KEY (
         CodigoVenda
     ),
@@ -125,7 +150,41 @@ CREATE TABLE CupomFiscalSat (
         CodigoVenda
     )
     REFERENCES Venda (CodigoVenda) ON DELETE CASCADE
-                                   ON UPDATE CASCADE
+                                   ON UPDATE CASCADE,
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
+    )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION
+);
+
+
+-- Table: Empresa
+DROP TABLE IF EXISTS Empresa;
+
+CREATE TABLE Empresa (
+    CodigoEmpresa     VARCHAR (32)  NOT NULL,
+    RazaoSocial       VARCHAR (120) NOT NULL,
+    NomeFantasia      VARCHAR (120),
+    Cnpj              VARCHAR (20)  NOT NULL,
+    InscricaoEstadual VARCHAR (20),
+    Endereco          VARCHAR (250),
+    Numero            VARCHAR (20),
+    Bairro            VARCHAR (80),
+    Cidade            VARCHAR (80),
+    Uf                VARCHAR (2),
+    Cep               VARCHAR (10),
+    Telefone          VARCHAR (20),
+    Email             VARCHAR (120),
+    CodigoAtivacaoSat VARCHAR (100),
+    ModeloSat         VARCHAR (20),
+    Ativa             BIT           NOT NULL
+                                    DEFAULT (1),
+    Sincronizado      BIT           NOT NULL
+                                    DEFAULT (0),
+    PRIMARY KEY (
+        CodigoEmpresa
+    )
 );
 
 
@@ -134,6 +193,7 @@ DROP TABLE IF EXISTS OperacaoCaixa;
 
 CREATE TABLE OperacaoCaixa (
     CodigoOperacaoCaixa         VARCHAR (32) NOT NULL,
+    Empresa_CodigoEmpresa       VARCHAR (32) NOT NULL,
     Usuario_CodigoUsuario       VARCHAR (32) NOT NULL,
     Caixa_CodigoCaixa           VARCHAR (32) NOT NULL,
     DataOperacao                DATETIME     NOT NULL,
@@ -154,6 +214,11 @@ CREATE TABLE OperacaoCaixa (
         Usuario_CodigoUsuario
     )
     REFERENCES Usuario (CodigoUsuario) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION,
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
+    )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
                                        ON UPDATE NO ACTION
 );
 
@@ -176,20 +241,26 @@ CREATE TABLE Parametro (
 DROP TABLE IF EXISTS Pedido;
 
 CREATE TABLE Pedido (
-    CodigoPedido VARCHAR (32)  NOT NULL,
-    DataPedido   DATETIME      NOT NULL,
-    DataEntrega  DATETIME      NOT NULL,
-    NomeCliente  VARCHAR (80)  NOT NULL,
-    Telefone     VARCHAR (20),
-    Situacao     VARCHAR (15)  NOT NULL,
-    Observacao   VARCHAR (500),
-    Valor        DECIMAL       NOT NULL
+    CodigoPedido          VARCHAR (32)  NOT NULL,
+    Empresa_CodigoEmpresa VARCHAR (32)  NOT NULL,
+    DataPedido            DATETIME      NOT NULL,
+    DataEntrega           DATETIME      NOT NULL,
+    NomeCliente           VARCHAR (80)  NOT NULL,
+    Telefone              VARCHAR (20),
+    Situacao              VARCHAR (15)  NOT NULL,
+    Observacao            VARCHAR (500),
+    Valor                 DECIMAL       NOT NULL
                                DEFAULT 0,
-    Sincronizado BIT           NOT NULL
+    Sincronizado          BIT           NOT NULL
                                DEFAULT (0),
     PRIMARY KEY (
         CodigoPedido
+    ),
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
     )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION
 );
 
 
@@ -224,6 +295,7 @@ DROP TABLE IF EXISTS Produto;
 
 CREATE TABLE Produto (
     CodigoDeBarra          VARCHAR (32)  NOT NULL,
+    Empresa_CodigoEmpresa  VARCHAR (32)  NOT NULL,
     TipoProduto            VARCHAR (15)  NOT NULL,
     Modelo                 VARCHAR (60)  NOT NULL,
     Descricao              VARCHAR (250) NOT NULL,
@@ -251,7 +323,12 @@ CREATE TABLE Produto (
     QtdeEstoque            DECIMAL       NOT NULL,
     PRIMARY KEY (
         CodigoDeBarra
+    ),
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
     )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION
 );
 
 
@@ -317,15 +394,21 @@ CREATE TABLE ResultadoOperacaoFechamento (
 DROP TABLE IF EXISTS TipoPagamento;
 
 CREATE TABLE TipoPagamento (
-    CodigoTipoPagamento VARCHAR (32) NOT NULL,
-    Nome                VARCHAR (30) NOT NULL,
-    PercentualDesconto  DECIMAL      NOT NULL,
-    DiasParaPagamento   INTEGER      NOT NULL,
-    Sincronizado        BIT          NOT NULL
+    CodigoTipoPagamento   VARCHAR (32) NOT NULL,
+    Empresa_CodigoEmpresa VARCHAR (32) NOT NULL,
+    Nome                  VARCHAR (30) NOT NULL,
+    PercentualDesconto    DECIMAL      NOT NULL,
+    DiasParaPagamento     INTEGER      NOT NULL,
+    Sincronizado          BIT          NOT NULL
                                      DEFAULT (0),
     PRIMARY KEY (
         CodigoTipoPagamento
+    ),
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
     )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION
 );
 
 
@@ -345,11 +428,37 @@ CREATE TABLE Usuario (
 );
 
 
+-- Table: UsuarioEmpresa
+DROP TABLE IF EXISTS UsuarioEmpresa;
+
+CREATE TABLE UsuarioEmpresa (
+    Usuario_CodigoUsuario VARCHAR (32) NOT NULL,
+    Empresa_CodigoEmpresa VARCHAR (32) NOT NULL,
+    Sincronizado          BIT          NOT NULL
+                                       DEFAULT (0),
+    PRIMARY KEY (
+        Usuario_CodigoUsuario,
+        Empresa_CodigoEmpresa
+    ),
+    FOREIGN KEY (
+        Usuario_CodigoUsuario
+    )
+    REFERENCES Usuario (CodigoUsuario) ON DELETE CASCADE
+                                       ON UPDATE CASCADE,
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
+    )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE CASCADE
+                                       ON UPDATE CASCADE
+);
+
+
 -- Table: Venda
 DROP TABLE IF EXISTS Venda;
 
 CREATE TABLE Venda (
     CodigoVenda                       VARCHAR (40) NOT NULL,
+    Empresa_CodigoEmpresa             VARCHAR (32) NOT NULL,
     OperacaoCaixa_CodigoOperacaoCaixa VARCHAR (32) NOT NULL,
     Usuario_CodigoUsuario             VARCHAR (32) NOT NULL,
     ValorTotalVenda                   DECIMAL      NOT NULL,
@@ -375,7 +484,12 @@ CREATE TABLE Venda (
         OperacaoCaixa_CodigoOperacaoCaixa
     )
     REFERENCES OperacaoCaixa (CodigoOperacaoCaixa) ON DELETE CASCADE
-                                                   ON UPDATE CASCADE
+                                                   ON UPDATE CASCADE,
+    FOREIGN KEY (
+        Empresa_CodigoEmpresa
+    )
+    REFERENCES Empresa (CodigoEmpresa) ON DELETE NO ACTION
+                                       ON UPDATE NO ACTION
 );
 
 
@@ -438,6 +552,30 @@ CREATE TABLE VendaProduto (
 );
 
 
+-- Index: Caixa_FKIndex1
+DROP INDEX IF EXISTS Caixa_FKIndex1;
+
+CREATE INDEX Caixa_FKIndex1 ON Caixa (
+    Empresa_CodigoEmpresa
+);
+
+
+-- Index: ClienteCampanha_FKIndex1
+DROP INDEX IF EXISTS ClienteCampanha_FKIndex1;
+
+CREATE INDEX ClienteCampanha_FKIndex1 ON ClienteCampanha (
+    Empresa_CodigoEmpresa
+);
+
+
+-- Index: Comanda_FKIndex1
+DROP INDEX IF EXISTS Comanda_FKIndex1;
+
+CREATE INDEX Comanda_FKIndex1 ON Comanda (
+    Empresa_CodigoEmpresa
+);
+
+
 -- Index: ComandaProduto_FKIndex1
 DROP INDEX IF EXISTS ComandaProduto_FKIndex1;
 
@@ -454,11 +592,27 @@ CREATE INDEX ComandaProduto_FKIndex3 ON ComandaProduto (
 );
 
 
+-- Index: ConfiguracaoCategoriaProduto_FKIndex1
+DROP INDEX IF EXISTS ConfiguracaoCategoriaProduto_FKIndex1;
+
+CREATE INDEX ConfiguracaoCategoriaProduto_FKIndex1 ON ConfiguracaoCategoriaProduto (
+    Empresa_CodigoEmpresa
+);
+
+
 -- Index: CupomFiscalSat_FKIndex1
 DROP INDEX IF EXISTS CupomFiscalSat_FKIndex1;
 
 CREATE INDEX CupomFiscalSat_FKIndex1 ON CupomFiscalSat (
     CodigoVenda
+);
+
+
+-- Index: CupomFiscalSat_FKIndex2
+DROP INDEX IF EXISTS CupomFiscalSat_FKIndex2;
+
+CREATE INDEX CupomFiscalSat_FKIndex2 ON CupomFiscalSat (
+    Empresa_CodigoEmpresa
 );
 
 
@@ -598,11 +752,27 @@ CREATE INDEX OperacaoCaixa_FKIndex2 ON OperacaoCaixa (
 );
 
 
+-- Index: OperacaoCaixa_FKIndex3
+DROP INDEX IF EXISTS OperacaoCaixa_FKIndex3;
+
+CREATE INDEX OperacaoCaixa_FKIndex3 ON OperacaoCaixa (
+    Empresa_CodigoEmpresa
+);
+
+
 -- Index: OperacaoCaixaResultado_FKIndex1
 DROP INDEX IF EXISTS OperacaoCaixaResultado_FKIndex1;
 
 CREATE INDEX OperacaoCaixaResultado_FKIndex1 ON ResultadoOperacaoFechamento (
     OperacaoCaixa_CodigoOperacaoCaixa
+);
+
+
+-- Index: Pedido_FKIndex1
+DROP INDEX IF EXISTS Pedido_FKIndex1;
+
+CREATE INDEX Pedido_FKIndex1 ON Pedido (
+    Empresa_CodigoEmpresa
 );
 
 
@@ -630,11 +800,43 @@ CREATE INDEX Produto_DescricaoBusca ON Produto (
 );
 
 
+-- Index: Produto_FKIndex1
+DROP INDEX IF EXISTS Produto_FKIndex1;
+
+CREATE INDEX Produto_FKIndex1 ON Produto (
+    Empresa_CodigoEmpresa
+);
+
+
 -- Index: ProdutoProducao_FKIndex1
 DROP INDEX IF EXISTS ProdutoProducao_FKIndex1;
 
 CREATE INDEX ProdutoProducao_FKIndex1 ON ProdutoProducao (
     Produto_CodigoDeBarra
+);
+
+
+-- Index: TipoPagamento_FKIndex1
+DROP INDEX IF EXISTS TipoPagamento_FKIndex1;
+
+CREATE INDEX TipoPagamento_FKIndex1 ON TipoPagamento (
+    Empresa_CodigoEmpresa
+);
+
+
+-- Index: UsuarioEmpresa_FKIndex1
+DROP INDEX IF EXISTS UsuarioEmpresa_FKIndex1;
+
+CREATE INDEX UsuarioEmpresa_FKIndex1 ON UsuarioEmpresa (
+    Usuario_CodigoUsuario
+);
+
+
+-- Index: UsuarioEmpresa_FKIndex2
+DROP INDEX IF EXISTS UsuarioEmpresa_FKIndex2;
+
+CREATE INDEX UsuarioEmpresa_FKIndex2 ON UsuarioEmpresa (
+    Empresa_CodigoEmpresa
 );
 
 
@@ -651,6 +853,14 @@ DROP INDEX IF EXISTS Venda_FKIndex2;
 
 CREATE INDEX Venda_FKIndex2 ON Venda (
     OperacaoCaixa_CodigoOperacaoCaixa
+);
+
+
+-- Index: Venda_FKIndex3
+DROP INDEX IF EXISTS Venda_FKIndex3;
+
+CREATE INDEX Venda_FKIndex3 ON Venda (
+    Empresa_CodigoEmpresa
 );
 
 

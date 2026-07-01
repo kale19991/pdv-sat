@@ -74,11 +74,13 @@
     <Compile Include="Repositorio\RepositorioComanda.cs" />
     <Compile Include="Repositorio\RepositorioCriarBaseDeDados.cs" />
     <Compile Include="Repositorio\RepositorioCupomSat.cs" />
+    <Compile Include="Repositorio\RepositorioEmpresa.cs" />
     <Compile Include="Repositorio\RepositorioPedido.cs" />
     <Compile Include="Repositorio\RepositorioPedidoProduto.cs" />
     <Compile Include="Repositorio\RepositorioProducao.cs" />
     <Compile Include="Repositorio\RepositorioProduto.cs" />
     <Compile Include="Repositorio\RepositorioUsuario.cs" />
+    <Compile Include="Repositorio\RepositorioUsuarioEmpresa.cs" />
     <Compile Include="Repositorio\RepositorioVenda.cs" />
     <Compile Include="SAT\Bematech.cs" />
     <Compile Include="SAT\Dimep.cs" />

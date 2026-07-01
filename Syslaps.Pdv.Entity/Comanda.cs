@@ -5,7 +5,7 @@ namespace Syslaps.Pdv.Entity
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Comanda")]
-    public partial class Comanda
+    public partial class Comanda : IEntidadeDaEmpresa
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Comanda()
@@ -15,6 +15,10 @@ namespace Syslaps.Pdv.Entity
 
         [Key]
         public string CodigoComanda { get; set; }
+
+        [Required]
+        [StringLength(32)]
+        public string Empresa_CodigoEmpresa { get; set; }
 
         [Required]
         [StringLength(20)]

@@ -6,7 +6,7 @@ namespace Syslaps.Pdv.Entity
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("CupomFiscalSat")]
-    public partial class CupomFiscalSat
+    public partial class CupomFiscalSat : IEntidadeDaEmpresa
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CupomFiscalSat()
@@ -16,6 +16,10 @@ namespace Syslaps.Pdv.Entity
         [Key]
         [StringLength(32)]
         public string CodigoVenda { get; set; }
+
+        [Required]
+        [StringLength(32)]
+        public string Empresa_CodigoEmpresa { get; set; }
 
         public string CpfCnpj { get; set; }
 
