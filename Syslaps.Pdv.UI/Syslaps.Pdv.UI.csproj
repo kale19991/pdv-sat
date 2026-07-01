@@ -137,6 +137,17 @@
       <DependentUpon>ClienteCampanha.xaml</DependentUpon>
     </Compile>
     <Compile Include="Telas\Cliente\ClienteCampanhaMvvm.cs" />
+    <Compile Include="Telas\ConfiguracaoInicial\ConfiguracaoInicialWindow.xaml.cs">
+      <DependentUpon>ConfiguracaoInicialWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Telas\ConfiguracaoInicial\ConfiguracaoInicialMvvm.cs" />
+    <Compile Include="Telas\Empresa\SelecaoDeEmpresaWindow.xaml.cs">
+      <DependentUpon>SelecaoDeEmpresaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Telas\Empresa\CadastroDeEmpresaWindow.xaml.cs">
+      <DependentUpon>CadastroDeEmpresaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Telas\Empresa\CadastroDeEmpresaMvvm.cs" />
     <Compile Include="Telas\Comanda\ConsultarComanda.xaml.cs">
       <DependentUpon>ConsultarComanda.xaml</DependentUpon>
     </Compile>
@@ -210,6 +221,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Telas\Cliente\ClienteCampanha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Telas\ConfiguracaoInicial\ConfiguracaoInicialWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Telas\Empresa\SelecaoDeEmpresaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Telas\Empresa\CadastroDeEmpresaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

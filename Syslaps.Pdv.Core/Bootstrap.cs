@@ -81,6 +81,10 @@ namespace Syslaps.Pdv.Core
 
             _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv.message.title", Valor = "Pdv - SAT" });
 
+            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.numcaixa", Valor = "001" });
+            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "pdv1.gaveta.automatica", Valor = "sim" });
+            _repositorio.Inserir<Parametro>(new Parametro() { Nome = "cfop.tributos", Valor = "16,20" });
+
             EtapaHandler?.Invoke("Parametros globais criados...");
         }
 

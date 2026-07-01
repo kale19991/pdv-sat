@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Bolaria.WpfUI.UI;
@@ -8,9 +9,11 @@ using Syslaps.Pdv.Cross;
 using Syslaps.Pdv.Entity;
 using Syslaps.Pdv.Infra.Repositorio;
 using Caixa = Syslaps.Pdv.Core.Dominio.Caixa.Caixa;
+using Empresa = Syslaps.Pdv.Core.Dominio.Empresa.Empresa;
 using Produto = Syslaps.Pdv.Core.Dominio.Produto.Produto;
 using TelaPrincipal = Syslaps.Pdv.UI.Telas.TelaPrincipal;
 using Usuario = Syslaps.Pdv.Core.Dominio.Usuario.Usuario;
+using Syslaps.Pdv.Core.Dominio.Usuario;
 using System.Configuration;
 
 namespace Syslaps.Pdv.UI
@@ -64,6 +67,8 @@ namespace Syslaps.Pdv.UI
 
                     InstanceManager.ListaDeProdutosDoPdv = ContainerIoc.GetInstance<Produto>().RecuperarListaDeProdutosDoPdvPoTipo(RdoTp2.IsChecked.Value ? 2 : 1);
 
+                    DefinirEmpresaCorrenteDoUsuario();
+
                     UIManager<TelaPrincipal>.Show();
                     Close();
                 }
@@ -83,6 +88,35 @@ namespace Syslaps.Pdv.UI
             {
                 this.StopWait();
             }
+        }
+
+        /// <summary>
+        /// Resolve a(s) empresa(s) vinculadas ao usuário logado e define
+        /// <see cref="InstanceManager.EmpresaCorrente"/>. Com uma única empresa vinculada,
+        /// seleciona automaticamente. Com mais de uma, abre <see cref="Telas.Empresa.SelecaoDeEmpresaWindow"/>
+        /// para o usuário escolher — se ele cancelar, usa a primeira da lista para não travar
+        /// o login. Sem nenhuma empresa vinculada, não define nada (cenário tratado pelo wizard).
+        /// </summary>
+        private void DefinirEmpresaCorrenteDoUsuario()
+        {
+            var empresas = ContainerIoc.GetInstance<IUsuarioEmpresaRepositorio>()
+                .RecuperarEmpresasDoUsuario(InstanceManager.UsuarioCorrente.UsuarioLogado.CodigoUsuario);
+
+            if (empresas == null || empresas.Count == 0) return;
+
+            var empresaEscolhida = empresas.First();
+
+            if (empresas.Count > 1)
+            {
+                var telaSelecao = new Telas.Empresa.SelecaoDeEmpresaWindow(empresas);
+                var confirmou = telaSelecao.ShowDialog();
+                if (confirmou == true && telaSelecao.EmpresaSelecionada != null)
+                    empresaEscolhida = telaSelecao.EmpresaSelecionada;
+            }
+
+            var empresa = ContainerIoc.GetInstance<Empresa>();
+            empresa.DefinirEmpresaCorrente(empresaEscolhida);
+            InstanceManager.EmpresaCorrente = empresa;
         }
 
         private void LoginWindow_OnLoaded(object sender, RoutedEventArgs e)

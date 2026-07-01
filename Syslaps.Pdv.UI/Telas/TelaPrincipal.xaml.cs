@@ -90,5 +90,10 @@ namespace Syslaps.Pdv.UI.Telas
         {
             (new ExportarNotaFiscal()).ShowDialog();
         }
+
+        private void BtnNovaEmpresa_OnClick(object sender, RoutedEventArgs e)
+        {
+            (new Empresa.CadastroDeEmpresaWindow()).ShowDialog();
+        }
     }
 }

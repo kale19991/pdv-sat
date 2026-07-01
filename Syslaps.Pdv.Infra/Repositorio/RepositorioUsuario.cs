@@ -12,6 +12,10 @@ namespace Syslaps.Pdv.Infra.Repositorio
             return Db.QuerySingleOrDefault<Usuario>("select * from Usuario Where Nome = @Nome", new { Nome = nome });
         }
 
-        
+        public bool ExisteAlgumUsuario()
+        {
+            var count = Db.ExecuteScalar<int>("select count(*) from Usuario");
+            return count > 0;
+        }
     }
 }

@@ -6,10 +6,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Syslaps.Pdv.Core;
 using Syslaps.Pdv.Core.Dominio.Base;
+using Syslaps.Pdv.Core.Dominio.Usuario;
 using Syslaps.Pdv.Cross;
 using Caixa = Syslaps.Pdv.Core.Dominio.Caixa.Caixa;
 using Syslaps.Pdv.Core.Dominio.Impressora;
 using Syslaps.Pdv.Infra.Repositorio;
+using Syslaps.Pdv.UI.Telas.ConfiguracaoInicial;
 using System.Configuration;
 
 namespace Syslaps.Pdv.UI
@@ -47,6 +49,12 @@ namespace Syslaps.Pdv.UI
             InstanceManager.Parametros = ContainerIoc.GetInstance<Parametros>();
 
             base.OnStartup(e);
+
+            var usuarioRepositorio = ContainerIoc.GetInstance<IUsuarioRepositorio>();
+            if (usuarioRepositorio.ExisteAlgumUsuario())
+                new LoginWindow().Show();
+            else
+                new ConfiguracaoInicialWindow().Show();
         }
         private void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)
         {

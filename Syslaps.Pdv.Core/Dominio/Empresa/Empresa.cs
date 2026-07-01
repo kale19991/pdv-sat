@@ -31,6 +31,15 @@ namespace Syslaps.Pdv.Core.Dominio.Empresa
             AdicionarMensagem("Empresa registrada com sucesso.");
         }
 
+        /// <summary>
+        /// Define a empresa corrente sem persistir nada, usado para restaurar o
+        /// contexto de sessão (ex.: após login) a partir de uma empresa já existente.
+        /// </summary>
+        public void DefinirEmpresaCorrente(Entity.Empresa empresa)
+        {
+            EmpresaCorrente = empresa;
+        }
+
         public void VincularUsuario(string codigoUsuario, string codigoEmpresa)
         {
             _usuarioEmpresaRepositorio.Inserir(new Entity.UsuarioEmpresa

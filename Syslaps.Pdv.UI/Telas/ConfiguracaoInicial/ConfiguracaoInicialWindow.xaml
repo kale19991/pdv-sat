@@ -1,0 +1,106 @@
+<Window x:Class="Syslaps.Pdv.UI.Telas.ConfiguracaoInicial.ConfiguracaoInicialWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Configuração Inicial" Height="600" Width="650" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="ConfiguracaoInicialWindow_OnLoaded">
+    <DockPanel>
+        <Border DockPanel.Dock="Bottom" Height="48" Margin="0,5,5,5">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button x:Name="BtnConcluir" IsDefault="True" Command="{Binding ConcluirCommand}" Click="BtnConcluir_OnClick" Margin="0,0,5,0" Content="_Concluir" Width="98" />
+                <Button x:Name="BtnSair" Content="_Sair" Width="76" Click="BtnSair_OnClick"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Margin="10">
+            <GroupBox Header="  Dados da Empresa  " Margin="0,0,0,10">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,0,0,0" Text="Razão Social:" />
+                    <TextBox x:Name="TxtRazaoSocial" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="3" Text="{Binding Empresa.RazaoSocial}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5,0,0,0" Text="Nome Fantasia:" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="3" Text="{Binding Empresa.NomeFantasia}" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5,0,0,0" Text="CNPJ:" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding Empresa.Cnpj}" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="5,0,0,0" Text="Inscr. Estadual:" />
+                    <TextBox Grid.Row="2" Grid.Column="3" Margin="3" Text="{Binding Empresa.InscricaoEstadual}" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5,0,0,0" Text="Endereço:" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding Empresa.Endereco}" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="2" Margin="5,0,0,0" Text="Número:" />
+                    <TextBox Grid.Row="3" Grid.Column="3" Margin="3" Text="{Binding Empresa.Numero}" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5,0,0,0" Text="Bairro:" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Margin="3" Text="{Binding Empresa.Bairro}" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="2" Margin="5,0,0,0" Text="Cidade:" />
+                    <TextBox Grid.Row="4" Grid.Column="3" Margin="3" Text="{Binding Empresa.Cidade}" />
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="5,0,0,0" Text="UF:" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Margin="3" MaxLength="2" Text="{Binding Empresa.Uf}" />
+
+                    <TextBlock Grid.Row="5" Grid.Column="2" Margin="5,0,0,0" Text="CEP:" />
+                    <TextBox Grid.Row="5" Grid.Column="3" Margin="3" Text="{Binding Empresa.Cep}" />
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="  Contato  " Margin="0,0,0,10">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,0,0,0" Text="Telefone:" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="3" Text="{Binding Empresa.Telefone}" />
+
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Text="Email:" />
+                    <TextBox Grid.Row="0" Grid.Column="3" Margin="3" Text="{Binding Empresa.Email}" />
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="  Usuário Administrador  ">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,0,0,0" Text="Usuário:" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="3" Text="{Binding NomeUsuario}" />
+
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Text="Senha:" />
+                    <PasswordBox x:Name="TxtSenha" Grid.Row="0" Grid.Column="3" Margin="3" />
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </DockPanel>
+</Window>

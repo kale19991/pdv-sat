@@ -34,6 +34,7 @@
                     <Button x:Name="BtnPedidos" Content="_Pedidos" Margin="10" Click="BtnPedidos_OnClick" Cursor="Hand" ForceCursor="True" FontSize="16" />
                     <Button x:Name="BtnFinanceiro" Visibility="Visible" Content="_Exportar XML" Margin="10" Click="BtnFinanceiro_Click" Cursor="Hand" ForceCursor="True" FontSize="16" />
                     <Button x:Name="BtnSat" Visibility="Visible" Content="_Validar SAT" Margin="10" Click="BtnSat_OnClick" Cursor="Hand" ForceCursor="True" FontSize="16" />
+                    <Button x:Name="BtnNovaEmpresa" Content="_Nova Empresa" Margin="10" Click="BtnNovaEmpresa_OnClick" Cursor="Hand" ForceCursor="True" FontSize="16" />
                 </UniformGrid>
             </Border>
         </Grid>
